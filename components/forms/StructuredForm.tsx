@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AIModel, StructuredFormData } from "@/lib/types";
+import { StructuredFormData } from "@/lib/types";
 import { useNarrativeGeneration } from "@/hooks/useNarrativeGeneration";
-import ModelSelector from "./ModelSelector";
 import NarrativeOutput from "@/components/narrative/NarrativeOutput";
 import { cn } from "@/lib/cn";
 
@@ -113,7 +111,7 @@ const HOSPITALS: { value: string; label: string }[] = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StructuredForm() {
-  const [model, setModel] = useState<AIModel>("claude-sonnet-4-6");
+  const model = "claude-sonnet-4-6" as const;
   const { status, narrative, error, generate, reset } = useNarrativeGeneration();
 
   const { register, handleSubmit, watch } = useForm<StructuredFormData>({
@@ -422,11 +420,6 @@ export default function StructuredForm() {
 
       {/* Model + Submit */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
-          AI Model
-        </p>
-        <ModelSelector model={model} onModelChange={setModel} />
-
         <button
           type="submit"
           disabled={isGenerating}
