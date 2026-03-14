@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuickChart — EMS PCR Narrative Generator
 
-## Getting Started
+A mobile-first web app for EMS personnel to generate Medicare-compliant Patient Care Report (PCR) narratives using Claude AI. Fill out one structured form and receive a complete, legally defensible ambulance transport narrative.
 
-First, run the development server:
+---
+
+## Features
+
+- Structured form covering unit info, scene, patient, assessment, mobility, and destination
+- AI-generated 9-paragraph PCR narrative
+- Streaming output with animated cursor — narrative appears in real time
+- One-click copy to clipboard
+- Mobile-first design with iOS zoom prevention
+- Deployed on Vercel with server-side API key handling
+
+---
+
+## Tech Stack
+
+- **Next.js 16** (App Router, TypeScript)
+- **React 19** + **Tailwind CSS v4**
+- **@anthropic-ai/sdk** — Claude Sonnet for narrative generation
+- **react-hook-form** — form state management
+- **clsx** + **tailwind-merge** — conditional class utilities
+
+---
+
+## Prerequisites
+
+- Node.js 18+
+- An [Anthropic API key](https://console.anthropic.com/)
+
+---
+
+## Installation
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/emiliootz/QuickChart.git
+cd QuickChart
+
+# 2. Install dependencies
+npm install
+
+# 3. Add your API key
+cp .env.local.example .env.local
+# Then edit .env.local and set:
+# ANTHROPIC_API_KEY=sk-ant-...
+
+# 4. Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+| Variable | Description |
+|---|---|
+| `ANTHROPIC_API_KEY` | Your Anthropic API key — required for narrative generation |
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the project root:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fill in the form fields: unit number, transport type, scene, patient info, EMS assessment, mobility, and destination
+2. Click **Generate Narrative**
+3. The narrative streams in real time below the form
+4. Click **Copy** to copy the full narrative to your clipboard
+5. Paste directly into your PCR software
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Project Structure
+
+```
+/
+├── app/
+│   ├── api/generate-narrative/route.ts   # Streaming POST endpoint
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── forms/
+│   │   ├── StructuredForm.tsx            # Main form with all fields
+│   │   └── ModelSelector.tsx             # AI model toggle
+│   ├── layout/Header.tsx
+│   └── narrative/NarrativeOutput.tsx     # Streaming output display
+├── hooks/
+│   ├── useNarrativeGeneration.ts         # Fetch + stream accumulation
+│   └── useClipboard.ts                   # Copy with fallback
+└── lib/
+    ├── anthropic.ts                       # Anthropic SDK client
+    ├── types.ts                           # Shared TypeScript types
+    └── prompts/
+        ├── formats.ts                     # System prompt
+        └── structured.ts                  # Prompt builder
+```
+
+---
+
+## Deployment
+
+The app is deployed on Vercel. To deploy your own instance:
+
+1. Push the repo to GitHub
+2. Import the project at [vercel.com](https://vercel.com)
+3. Add `ANTHROPIC_API_KEY` under **Settings → Environment Variables**
+4. Deploy — Vercel handles the rest
+
+---
+
+## Contributing
+
+1. Fork the repo and create a feature branch
+2. Make your changes
+3. Run `npm run build` to verify no TypeScript or build errors
+4. Open a pull request with a clear description of the change
