@@ -41,6 +41,9 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
       ? data.transportPositionCustom
       : data.transportPosition;
 
+  const resolvedSkin =
+    data.skin === "__other__" ? data.skinCustom : data.skin;
+
   const lines = [
     `Write the PCR narrative using the following call data:`,
     ``,
@@ -53,10 +56,18 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
     `Chief Complaint / Reason for Transport: ${data.chiefComplaint}`,
     `Mental Status: ${data.mentalStatus}`,
     `Medical History: ${data.medicalHistory}`,
+    `EMS Assessment — Airway: ${data.airway}`,
+    `EMS Assessment — Breathing: ${data.breathing}`,
+    `EMS Assessment — Circulation: ${data.circulation}`,
+    `EMS Assessment — Skin: ${resolvedSkin}`,
     `Mobility Level: ${data.mobilityLevel}`,
     `Transfer Method: ${data.transferType}`,
     `Transport Position: ${resolvedPosition}`,
   ];
+
+  if (data.patientComplaints && data.patientComplaints.trim()) {
+    lines.push(`Patient Complaints: ${data.patientComplaints.trim()}`);
+  }
 
   if (data.additionalInfo && data.additionalInfo.trim()) {
     lines.push(`Additional Details: ${data.additionalInfo.trim()}`);
