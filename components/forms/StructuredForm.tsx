@@ -134,6 +134,12 @@ export default function StructuredForm() {
       chiefComplaint: "",
       mentalStatus: "",
       medicalHistory: "",
+      airway: "Patent",
+      breathing: "Unlabored",
+      circulation: "Adequate",
+      skin: "",
+      skinCustom: "",
+      patientComplaints: "",
       mobilityLevel: "",
       transferType: "",
       transportPosition: "",
@@ -300,6 +306,68 @@ export default function StructuredForm() {
             {...register("medicalHistory")}
             rows={2}
             placeholder="e.g. atrial fibrillation, hypertension, COPD"
+            className={inputCls}
+          />
+        </Field>
+      </Card>
+
+      {/* EMS Assessment */}
+      <Card title="EMS Assessment">
+        <div className="grid grid-cols-3 gap-4">
+          <Field label="Airway">
+            <select {...register("airway")} className={inputCls}>
+              <option value="Patent">Patent</option>
+              <option value="Compromised">Compromised</option>
+              <option value="Obstructed">Obstructed</option>
+            </select>
+          </Field>
+          <Field label="Breathing">
+            <select {...register("breathing")} className={inputCls}>
+              <option value="Unlabored">Unlabored</option>
+              <option value="Labored">Labored</option>
+              <option value="Shallow">Shallow</option>
+              <option value="Absent">Absent</option>
+            </select>
+          </Field>
+          <Field label="Circulation">
+            <select {...register("circulation")} className={inputCls}>
+              <option value="Adequate">Adequate</option>
+              <option value="Inadequate">Inadequate</option>
+            </select>
+          </Field>
+        </div>
+
+        <Field label="Skin">
+          <select {...register("skin")} className={inputCls}>
+            <option value="">Select...</option>
+            <option value="warm and dry">Warm and dry</option>
+            <option value="cool and diaphoretic">Cool and diaphoretic</option>
+            <option value="warm and diaphoretic">Warm and diaphoretic</option>
+            <option value="cool and dry">Cool and dry</option>
+            <option value="pale and diaphoretic">Pale and diaphoretic</option>
+            <option value="pale and dry">Pale and dry</option>
+            <option value="flushed and warm">Flushed and warm</option>
+            <option value="cyanotic">Cyanotic</option>
+            <option value="__other__">Other (enter manually)</option>
+          </select>
+        </Field>
+
+        {watch("skin") === "__other__" && (
+          <Field label="Skin (specify)">
+            <input
+              {...register("skinCustom")}
+              type="text"
+              placeholder="Describe skin condition"
+              className={inputCls}
+            />
+          </Field>
+        )}
+
+        <Field label="Patient Complaints">
+          <input
+            {...register("patientComplaints")}
+            type="text"
+            placeholder="e.g. pain 6/10 right hip, shortness of breath (leave blank if none)"
             className={inputCls}
           />
         </Field>
