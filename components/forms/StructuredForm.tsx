@@ -47,7 +47,9 @@ const inputCls =
 
 // ─── Hospital lists ───────────────────────────────────────────────────────────
 
-const BILH_HOSPITALS: { value: string; label: string }[] = [
+type HospitalOption = { value: string; label: string };
+
+const BILH_HOSPITALS: HospitalOption[] = [
   { value: "Addison Gilbert Hospital in Gloucester, MA", label: "Addison Gilbert Hospital — Gloucester" },
   { value: "Anna Jaques Hospital in Newburyport, MA", label: "Anna Jaques Hospital — Newburyport" },
   { value: "BayRidge Hospital in Lynn, MA", label: "BayRidge Hospital — Lynn" },
@@ -63,6 +65,53 @@ const BILH_HOSPITALS: { value: string; label: string }[] = [
   { value: "New England Baptist Hospital in Boston, MA", label: "New England Baptist Hospital — Boston" },
   { value: "Winchester Hospital in Winchester, MA", label: "Winchester Hospital — Winchester" },
 ];
+
+const MGB_HOSPITALS: HospitalOption[] = [
+  { value: "Brigham and Women's Hospital in Boston, MA", label: "Brigham and Women's Hospital — Boston" },
+  { value: "Massachusetts General Hospital in Boston, MA", label: "Massachusetts General Hospital — Boston" },
+  { value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA", label: "Faulkner Hospital — Jamaica Plain" },
+  { value: "Cooley Dickinson Hospital in Northampton, MA", label: "Cooley Dickinson Hospital — Northampton" },
+  { value: "Martha's Vineyard Hospital in Oak Bluffs, MA", label: "Martha's Vineyard Hospital — Oak Bluffs" },
+  { value: "Massachusetts Eye and Ear in Boston, MA", label: "Massachusetts Eye and Ear — Boston" },
+  { value: "__mclean__", label: "McLean Hospital (choose campus)" },
+  { value: "Nantucket Cottage Hospital in Nantucket, MA", label: "Nantucket Cottage Hospital — Nantucket" },
+  { value: "Newton-Wellesley Hospital in Newton, MA", label: "Newton-Wellesley Hospital — Newton" },
+  { value: "Salem Hospital in Salem, MA", label: "Salem Hospital — Salem" },
+  { value: "__spaulding__", label: "Spaulding Rehabilitation (choose location)" },
+  { value: "Wentworth-Douglass Hospital in Dover, NH", label: "Wentworth-Douglass Hospital — Dover, NH" },
+];
+
+const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
+  "Beth Israel Lahey Health": BILH_HOSPITALS,
+  "Mass General Brigham": MGB_HOSPITALS,
+};
+
+function getCampusOptions(system: string, name: string): HospitalOption[] {
+  if (system === "Beth Israel Lahey Health" && name === "__bidmc__") {
+    return [
+      { value: "East Campus", label: "East Campus" },
+      { value: "West Campus", label: "West Campus" },
+    ];
+  }
+  if (system === "Mass General Brigham" && name === "__mclean__") {
+    return [
+      { value: "McLean Hospital Belmont Campus in Belmont, MA", label: "Belmont Campus" },
+      { value: "McLean SouthEast in Middleborough, MA", label: "McLean SouthEast — Middleborough" },
+      { value: "McLean SouthEast at Oak Street in Middleborough, MA", label: "McLean SouthEast at Oak Street — Middleborough" },
+      { value: "McLean Hospital Arlington Campus in Arlington, MA", label: "Arlington Campus" },
+    ];
+  }
+  if (system === "Mass General Brigham" && name === "__spaulding__") {
+    return [
+      { value: "Spaulding Rehabilitation Hospital in Charlestown, MA", label: "Spaulding Rehab Hospital — Charlestown" },
+      { value: "Spaulding Nursing and Therapy Center-Brighton in Brighton, MA", label: "Spaulding Nursing & Therapy Center — Brighton" },
+      { value: "Spaulding Hospital for Continued Medical Care Cambridge in Cambridge, MA", label: "Spaulding Hospital for Continued Medical Care — Cambridge" },
+      { value: "Spaulding Rehabilitation Hospital-Cape Cod in East Sandwich, MA", label: "Spaulding Rehab Hospital — Cape Cod" },
+      { value: "Spaulding Rehabilitation Center for Children in Lexington, MA", label: "Spaulding Rehab Center for Children — Lexington" },
+    ];
+  }
+  return [];
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -172,32 +221,34 @@ export default function StructuredForm() {
         )}
 
         {sceneLocation === "Hospital" && (
-          <Field label="Hospital System">
+          <Field label="Hospital Network">
             <select {...register("sceneHospitalSystem")} className={inputCls}>
-              <option value="">Select system...</option>
+              <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="__other__">Other — enter manually</option>
             </select>
           </Field>
         )}
 
-        {sceneLocation === "Hospital" && sceneHospitalSystem === "Beth Israel Lahey Health" && (
+        {sceneLocation === "Hospital" && HOSPITAL_SYSTEMS[sceneHospitalSystem] && (
           <Field label="Hospital">
             <select {...register("sceneHospitalName")} className={inputCls}>
               <option value="">Select hospital...</option>
-              {BILH_HOSPITALS.map((h) => (
+              {HOSPITAL_SYSTEMS[sceneHospitalSystem].map((h) => (
                 <option key={h.value} value={h.value}>{h.label}</option>
               ))}
             </select>
           </Field>
         )}
 
-        {sceneLocation === "Hospital" && sceneHospitalSystem === "Beth Israel Lahey Health" && sceneHospitalName === "__bidmc__" && (
-          <Field label="Campus">
+        {sceneLocation === "Hospital" && getCampusOptions(sceneHospitalSystem, sceneHospitalName).length > 0 && (
+          <Field label="Campus / Location">
             <select {...register("sceneHospitalCampus")} className={inputCls}>
-              <option value="">Select campus...</option>
-              <option value="East Campus">East Campus</option>
-              <option value="West Campus">West Campus</option>
+              <option value="">Select...</option>
+              {getCampusOptions(sceneHospitalSystem, sceneHospitalName).map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
             </select>
           </Field>
         )}
@@ -421,32 +472,34 @@ export default function StructuredForm() {
         )}
 
         {destination === "Hospital" && (
-          <Field label="Hospital System">
+          <Field label="Hospital Network">
             <select {...register("destinationHospitalSystem")} className={inputCls}>
-              <option value="">Select system...</option>
+              <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="__other__">Other — enter manually</option>
             </select>
           </Field>
         )}
 
-        {destination === "Hospital" && destinationHospitalSystem === "Beth Israel Lahey Health" && (
+        {destination === "Hospital" && HOSPITAL_SYSTEMS[destinationHospitalSystem] && (
           <Field label="Hospital">
             <select {...register("destinationHospitalName")} className={inputCls}>
               <option value="">Select hospital...</option>
-              {BILH_HOSPITALS.map((h) => (
+              {HOSPITAL_SYSTEMS[destinationHospitalSystem].map((h) => (
                 <option key={h.value} value={h.value}>{h.label}</option>
               ))}
             </select>
           </Field>
         )}
 
-        {destination === "Hospital" && destinationHospitalSystem === "Beth Israel Lahey Health" && destinationHospitalName === "__bidmc__" && (
-          <Field label="Campus">
+        {destination === "Hospital" && getCampusOptions(destinationHospitalSystem, destinationHospitalName).length > 0 && (
+          <Field label="Campus / Location">
             <select {...register("destinationHospitalCampus")} className={inputCls}>
-              <option value="">Select campus...</option>
-              <option value="East Campus">East Campus</option>
-              <option value="West Campus">West Campus</option>
+              <option value="">Select...</option>
+              {getCampusOptions(destinationHospitalSystem, destinationHospitalName).map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
             </select>
           </Field>
         )}

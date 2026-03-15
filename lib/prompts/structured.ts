@@ -14,6 +14,13 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
       }
       return name;
     }
+    if (system === "Mass General Brigham") {
+      // __mclean__ and __spaulding__ use campus value as the full resolved name
+      if (name === "__mclean__" || name === "__spaulding__") {
+        return campus;
+      }
+      return name;
+    }
     return custom;
   }
 
