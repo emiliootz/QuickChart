@@ -5,12 +5,16 @@ export interface StructuredFormData {
   transportType: string;
   sceneLocation: string;
   sceneLocationCustom: string;
+  sceneHospitalSystem: string;
   sceneHospitalName: string;
+  sceneHospitalCampus: string;
   sceneHospitalCustom: string;
   sceneFloorRoom: string;
   destination: string;
   destinationCustom: string;
+  destinationHospitalSystem: string;
   destinationHospitalName: string;
+  destinationHospitalCampus: string;
   destinationHospitalCustom: string;
   destinationRoom: string;
   reportReceivedFrom: string;

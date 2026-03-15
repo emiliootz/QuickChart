@@ -45,67 +45,23 @@ function Field({
 const inputCls =
   "rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full bg-white";
 
-// ─── Hospital list ────────────────────────────────────────────────────────────
+// ─── Hospital lists ───────────────────────────────────────────────────────────
 
-const HOSPITALS: { value: string; label: string }[] = [
-  {
-    value: "Massachusetts General Hospital in Boston, MA",
-    label: "MGH — Boston",
-  },
-  {
-    value: "Brigham and Women's Hospital in Boston, MA",
-    label: "BWH — Boston",
-  },
-  {
-    value: "Beth Israel Deaconess Medical Center East Campus in Boston, MA",
-    label: "Beth Israel Deaconess — East Campus",
-  },
-  {
-    value: "Beth Israel Deaconess Medical Center West Campus in Boston, MA",
-    label: "Beth Israel Deaconess — West Campus",
-  },
-  {
-    value: "Beth Israel Deaconess Medical Center in Needham, MA",
-    label: "Beth Israel Deaconess — Needham",
-  },
-  { value: "Boston Medical Center in Boston, MA", label: "BMC — Boston" },
-  {
-    value: "Boston Medical Center Brighton campus in Brighton, MA",
-    label: "BMC Brighton",
-  },
-  {
-    value: "Tufts Medical Center in Boston, MA",
-    label: "Tufts Medical Center — Boston",
-  },
-  {
-    value: "Dana-Farber Cancer Institute in Boston, MA",
-    label: "Dana-Farber Cancer Institute",
-  },
-  {
-    value: "Massachusetts Eye and Ear in Boston, MA",
-    label: "Massachusetts Eye and Ear",
-  },
-  {
-    value: "New England Baptist Hospital in Boston, MA",
-    label: "New England Baptist Hospital",
-  },
-  {
-    value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA",
-    label: "Faulkner Hospital — Jamaica Plain",
-  },
-  {
-    value: "Mount Auburn Hospital in Cambridge, MA",
-    label: "Mount Auburn — Cambridge",
-  },
-  {
-    value: "Newton-Wellesley Hospital in Newton, MA",
-    label: "Newton-Wellesley Hospital",
-  },
-  {
-    value: "Boston Children's Hospital in Boston, MA",
-    label: "Boston Children's Hospital",
-  },
-  { value: "__other__", label: "Other — enter manually" },
+const BILH_HOSPITALS: { value: string; label: string }[] = [
+  { value: "Addison Gilbert Hospital in Gloucester, MA", label: "Addison Gilbert Hospital — Gloucester" },
+  { value: "Anna Jaques Hospital in Newburyport, MA", label: "Anna Jaques Hospital — Newburyport" },
+  { value: "BayRidge Hospital in Lynn, MA", label: "BayRidge Hospital — Lynn" },
+  { value: "Beth Israel Deaconess Hospital-Milton in Milton, MA", label: "BID Hospital — Milton" },
+  { value: "Beth Israel Deaconess Hospital-Needham in Needham, MA", label: "BID Hospital — Needham" },
+  { value: "Beth Israel Deaconess Hospital-Plymouth in Plymouth, MA", label: "BID Hospital — Plymouth" },
+  { value: "__bidmc__", label: "Beth Israel Deaconess Medical Center — Boston" },
+  { value: "Beverly Hospital in Beverly, MA", label: "Beverly Hospital — Beverly" },
+  { value: "Exeter Hospital in Exeter, NH", label: "Exeter Hospital — Exeter, NH" },
+  { value: "Lahey Hospital & Medical Center in Burlington, MA", label: "Lahey Hospital & Medical Center — Burlington" },
+  { value: "Lahey Medical Center-Peabody in Peabody, MA", label: "Lahey Medical Center — Peabody" },
+  { value: "Mount Auburn Hospital in Cambridge, MA", label: "Mount Auburn Hospital — Cambridge" },
+  { value: "New England Baptist Hospital in Boston, MA", label: "New England Baptist Hospital — Boston" },
+  { value: "Winchester Hospital in Winchester, MA", label: "Winchester Hospital — Winchester" },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -120,12 +76,16 @@ export default function StructuredForm() {
       transportType: "",
       sceneLocation: "",
       sceneLocationCustom: "",
+      sceneHospitalSystem: "",
       sceneHospitalName: "",
+      sceneHospitalCampus: "",
       sceneHospitalCustom: "",
       sceneFloorRoom: "",
       destination: "",
       destinationCustom: "",
+      destinationHospitalSystem: "",
       destinationHospitalName: "",
+      destinationHospitalCampus: "",
       destinationHospitalCustom: "",
       destinationRoom: "",
       reportReceivedFrom: "",
@@ -149,8 +109,10 @@ export default function StructuredForm() {
   });
 
   const sceneLocation = watch("sceneLocation");
+  const sceneHospitalSystem = watch("sceneHospitalSystem");
   const sceneHospitalName = watch("sceneHospitalName");
   const destination = watch("destination");
+  const destinationHospitalSystem = watch("destinationHospitalSystem");
   const destinationHospitalName = watch("destinationHospitalName");
   const transportPosition = watch("transportPosition");
   const isGenerating = status === "loading" || status === "streaming";
@@ -210,19 +172,37 @@ export default function StructuredForm() {
         )}
 
         {sceneLocation === "Hospital" && (
-          <Field label="Hospital Name">
+          <Field label="Hospital System">
+            <select {...register("sceneHospitalSystem")} className={inputCls}>
+              <option value="">Select system...</option>
+              <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="__other__">Other — enter manually</option>
+            </select>
+          </Field>
+        )}
+
+        {sceneLocation === "Hospital" && sceneHospitalSystem === "Beth Israel Lahey Health" && (
+          <Field label="Hospital">
             <select {...register("sceneHospitalName")} className={inputCls}>
               <option value="">Select hospital...</option>
-              {HOSPITALS.map((h) => (
-                <option key={h.value} value={h.value}>
-                  {h.label}
-                </option>
+              {BILH_HOSPITALS.map((h) => (
+                <option key={h.value} value={h.value}>{h.label}</option>
               ))}
             </select>
           </Field>
         )}
 
-        {sceneLocation === "Hospital" && sceneHospitalName === "__other__" && (
+        {sceneLocation === "Hospital" && sceneHospitalSystem === "Beth Israel Lahey Health" && sceneHospitalName === "__bidmc__" && (
+          <Field label="Campus">
+            <select {...register("sceneHospitalCampus")} className={inputCls}>
+              <option value="">Select campus...</option>
+              <option value="East Campus">East Campus</option>
+              <option value="West Campus">West Campus</option>
+            </select>
+          </Field>
+        )}
+
+        {sceneLocation === "Hospital" && sceneHospitalSystem === "__other__" && (
           <Field label="Hospital Name (specify)">
             <input
               {...register("sceneHospitalCustom")}
@@ -441,19 +421,37 @@ export default function StructuredForm() {
         )}
 
         {destination === "Hospital" && (
-          <Field label="Hospital Name">
+          <Field label="Hospital System">
+            <select {...register("destinationHospitalSystem")} className={inputCls}>
+              <option value="">Select system...</option>
+              <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="__other__">Other — enter manually</option>
+            </select>
+          </Field>
+        )}
+
+        {destination === "Hospital" && destinationHospitalSystem === "Beth Israel Lahey Health" && (
+          <Field label="Hospital">
             <select {...register("destinationHospitalName")} className={inputCls}>
               <option value="">Select hospital...</option>
-              {HOSPITALS.map((h) => (
-                <option key={h.value} value={h.value}>
-                  {h.label}
-                </option>
+              {BILH_HOSPITALS.map((h) => (
+                <option key={h.value} value={h.value}>{h.label}</option>
               ))}
             </select>
           </Field>
         )}
 
-        {destination === "Hospital" && destinationHospitalName === "__other__" && (
+        {destination === "Hospital" && destinationHospitalSystem === "Beth Israel Lahey Health" && destinationHospitalName === "__bidmc__" && (
+          <Field label="Campus">
+            <select {...register("destinationHospitalCampus")} className={inputCls}>
+              <option value="">Select campus...</option>
+              <option value="East Campus">East Campus</option>
+              <option value="West Campus">West Campus</option>
+            </select>
+          </Field>
+        )}
+
+        {destination === "Hospital" && destinationHospitalSystem === "__other__" && (
           <Field label="Hospital Name (specify)">
             <input
               {...register("destinationHospitalCustom")}

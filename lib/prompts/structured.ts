@@ -1,14 +1,31 @@
 import { StructuredFormData } from "@/lib/types";
 
 export function buildStructuredPrompt(data: StructuredFormData): string {
+  // Resolve hospital name (shared logic for scene and destination)
+  function resolveHospital(
+    system: string,
+    name: string,
+    campus: string,
+    custom: string
+  ): string {
+    if (system === "Beth Israel Lahey Health") {
+      if (name === "__bidmc__") {
+        return `Beth Israel Deaconess Medical Center ${campus} in Boston, MA`;
+      }
+      return name;
+    }
+    return custom;
+  }
+
   // Resolve scene
   let resolvedScene = "";
   if (data.sceneLocation === "Hospital") {
-    const hospitalName =
-      data.sceneHospitalName === "__other__"
-        ? data.sceneHospitalCustom
-        : data.sceneHospitalName;
-    resolvedScene = hospitalName;
+    resolvedScene = resolveHospital(
+      data.sceneHospitalSystem,
+      data.sceneHospitalName,
+      data.sceneHospitalCampus,
+      data.sceneHospitalCustom
+    );
     if (data.sceneFloorRoom) resolvedScene += `, ${data.sceneFloorRoom}`;
   } else if (data.sceneLocation === "__other__") {
     resolvedScene = data.sceneLocationCustom;
@@ -21,11 +38,12 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
   // Resolve destination
   let resolvedDestination = "";
   if (data.destination === "Hospital") {
-    const hospitalName =
-      data.destinationHospitalName === "__other__"
-        ? data.destinationHospitalCustom
-        : data.destinationHospitalName;
-    resolvedDestination = hospitalName;
+    resolvedDestination = resolveHospital(
+      data.destinationHospitalSystem,
+      data.destinationHospitalName,
+      data.destinationHospitalCampus,
+      data.destinationHospitalCustom
+    );
     if (data.destinationRoom) resolvedDestination += `, ${data.destinationRoom}`;
   } else if (data.destination === "__other__") {
     resolvedDestination = data.destinationCustom;
