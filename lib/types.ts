@@ -21,6 +21,12 @@ export interface StructuredFormData {
   patientAge: string;
   patientGender: string;
   chiefComplaint: string;
+  transportReason: string;
+  transportReasonCustom: string;
+  oxygenDelivery: string;
+  oxygenLiters: string;
+  castType: string;
+  sectionType: string;
   mentalStatus: string;
   medicalHistory: string;
   airway: string;
