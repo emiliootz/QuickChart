@@ -69,6 +69,20 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
   const resolvedSkin =
     data.skin === "__other__" ? data.skinCustom : data.skin;
 
+  // Resolve transport reason with conditional details
+  let resolvedTransportReason = "";
+  if (data.transportReason === "Other") {
+    resolvedTransportReason = data.transportReasonCustom || "Other";
+  } else if (data.transportReason === "On oxygen") {
+    resolvedTransportReason = `On oxygen via ${data.oxygenDelivery} at ${data.oxygenLiters} L/min`;
+  } else if (data.transportReason === "Has a cast") {
+    resolvedTransportReason = `Has a cast (${data.castType})`;
+  } else if (data.transportReason === "Is sectioned") {
+    resolvedTransportReason = `Is sectioned (${data.sectionType})`;
+  } else {
+    resolvedTransportReason = data.transportReason;
+  }
+
   const lines = [
     `Write the PCR narrative using the following call data:`,
     ``,
@@ -78,7 +92,8 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
     `Destination: ${resolvedDestination}`,
     `Report Received From: ${data.reportReceivedFrom}`,
     `Patient: ${data.patientAge}-year-old ${data.patientGender}`,
-    `Chief Complaint / Reason for Transport: ${data.chiefComplaint}`,
+    `Chief Complaint: ${data.chiefComplaint}`,
+    `Reason for Transport (Medical Necessity): ${resolvedTransportReason}`,
     `Mental Status: ${data.mentalStatus}`,
     `Medical History: ${data.medicalHistory}`,
     `EMS Assessment — Airway: ${data.airway}`,
