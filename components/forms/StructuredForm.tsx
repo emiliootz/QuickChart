@@ -81,9 +81,16 @@ const MGB_HOSPITALS: HospitalOption[] = [
   { value: "Wentworth-Douglass Hospital in Dover, NH", label: "Wentworth-Douglass Hospital — Dover, NH" },
 ];
 
+const BMC_HOSPITALS: HospitalOption[] = [
+  { value: "Boston Medical Center in Boston, MA", label: "Boston Medical Center — Boston" },
+  { value: "Boston Medical Center-Brighton in Brighton, MA", label: "Boston Medical Center — Brighton" },
+  { value: "Boston Medical Center-South in Brockton, MA", label: "Boston Medical Center — South (Brockton)" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
+  "Boston Medical Center Health System": BMC_HOSPITALS,
 };
 
 function getCampusOptions(system: string, name: string): HospitalOption[] {
@@ -225,6 +232,7 @@ export default function StructuredForm() {
             <select {...register("sceneHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="__other__">Other — enter manually</option>
             </select>
@@ -476,6 +484,7 @@ export default function StructuredForm() {
             <select {...register("destinationHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="__other__">Other — enter manually</option>
             </select>
