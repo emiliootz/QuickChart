@@ -87,10 +87,33 @@ const BMC_HOSPITALS: HospitalOption[] = [
   { value: "Boston Medical Center-South in Brockton, MA", label: "Boston Medical Center — South (Brockton)" },
 ];
 
+const CHA_HOSPITALS: HospitalOption[] = [
+  { value: "CHA Cambridge Hospital in Cambridge, MA", label: "CHA Cambridge Hospital — Cambridge" },
+  { value: "CHA Everett Hospital in Everett, MA", label: "CHA Everett Hospital — Everett" },
+  { value: "CHA Somerville Campus in Somerville, MA", label: "CHA Somerville Campus — Somerville" },
+];
+
+const UHS_HOSPITALS: HospitalOption[] = [
+  { value: "Arbour Hospital in Jamaica Plain, MA", label: "Arbour Hospital — Jamaica Plain" },
+  { value: "Arbour-HRI Hospital in Brookline, MA", label: "Arbour-HRI Hospital — Brookline" },
+  { value: "Pembroke Hospital in Pembroke, MA", label: "Pembroke Hospital — Pembroke" },
+  { value: "Westwood Lodge in Westwood, MA", label: "Westwood Lodge — Westwood" },
+];
+
+const DPH_HOSPITALS: HospitalOption[] = [
+  { value: "Lemuel Shattuck Hospital in Jamaica Plain, MA", label: "Lemuel Shattuck Hospital — Jamaica Plain" },
+  { value: "Pappas Rehabilitation Hospital for Children in Canton, MA", label: "Pappas Rehabilitation Hospital for Children — Canton" },
+  { value: "Tewksbury Hospital in Tewksbury, MA", label: "Tewksbury Hospital — Tewksbury" },
+  { value: "Western Massachusetts Hospital in Westfield, MA", label: "Western Massachusetts Hospital — Westfield" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
   "Boston Medical Center Health System": BMC_HOSPITALS,
+  "Cambridge Health Alliance": CHA_HOSPITALS,
+  "Massachusetts Department of Public Health (DPH)": DPH_HOSPITALS,
+  "Universal Health Services (Arbour Health)": UHS_HOSPITALS,
 };
 
 function getCampusOptions(system: string, name: string): HospitalOption[] {
@@ -240,7 +263,10 @@ export default function StructuredForm() {
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
+              <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
+              <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
           </Field>
@@ -565,7 +591,10 @@ export default function StructuredForm() {
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
+              <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
+              <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
           </Field>
