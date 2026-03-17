@@ -466,7 +466,7 @@ export default function StructuredForm() {
             setValue("circulation", "Adequate");
             setValue("skin", "warm and dry");
           }}
-          className="self-start rounded-lg border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-50 active:bg-green-100 transition-colors"
+          className="w-full rounded-lg border border-green-600 px-4 py-3 text-sm font-semibold text-green-700 hover:bg-green-50 active:bg-green-100 transition-colors"
         >
           Set Normal
         </button>
