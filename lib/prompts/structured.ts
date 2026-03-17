@@ -21,7 +21,9 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
       }
       return name;
     }
-    return custom;
+    // For all other networks (BMC, CHA, UHS, DPH, etc.), the hospital name
+    // is stored directly in `name`; fall back to `custom` only for manual entry.
+    return name || custom;
   }
 
   // Resolve scene
