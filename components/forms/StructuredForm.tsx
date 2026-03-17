@@ -149,7 +149,7 @@ export default function StructuredForm() {
   const model = "claude-sonnet-4-6" as const;
   const { status, narrative, error, generate, reset } = useNarrativeGeneration();
 
-  const { register, handleSubmit, watch } = useForm<StructuredFormData>({
+  const { register, handleSubmit, watch, setValue } = useForm<StructuredFormData>({
     defaultValues: {
       ambulanceNumber: "",
       transportType: "",
@@ -179,9 +179,9 @@ export default function StructuredForm() {
       sectionType: "",
       mentalStatus: "",
       medicalHistory: "",
-      airway: "Patent",
-      breathing: "Unlabored",
-      circulation: "Adequate",
+      airway: "",
+      breathing: "",
+      circulation: "",
       skin: "",
       skinCustom: "",
       patientComplaints: "",
@@ -458,9 +458,22 @@ export default function StructuredForm() {
 
       {/* EMS Assessment */}
       <Card title="EMS Assessment">
+        <button
+          type="button"
+          onClick={() => {
+            setValue("airway", "Patent");
+            setValue("breathing", "Unlabored");
+            setValue("circulation", "Adequate");
+            setValue("skin", "warm and dry");
+          }}
+          className="self-start rounded-lg border border-green-600 px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-50 active:bg-green-100 transition-colors"
+        >
+          Set Normal
+        </button>
         <div className="grid grid-cols-3 gap-4">
           <Field label="Airway">
             <select {...register("airway")} className={inputCls}>
+              <option value="">Select...</option>
               <option value="Patent">Patent</option>
               <option value="Compromised">Compromised</option>
               <option value="Obstructed">Obstructed</option>
@@ -468,6 +481,7 @@ export default function StructuredForm() {
           </Field>
           <Field label="Breathing">
             <select {...register("breathing")} className={inputCls}>
+              <option value="">Select...</option>
               <option value="Unlabored">Unlabored</option>
               <option value="Labored">Labored</option>
               <option value="Shallow">Shallow</option>
@@ -476,6 +490,7 @@ export default function StructuredForm() {
           </Field>
           <Field label="Circulation">
             <select {...register("circulation")} className={inputCls}>
+              <option value="">Select...</option>
               <option value="Adequate">Adequate</option>
               <option value="Inadequate">Inadequate</option>
             </select>
