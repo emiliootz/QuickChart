@@ -11,6 +11,7 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   title: "QuickChart — EMS PCR Narrative Generator",
   description: "Generate Medicare-compliant EMS PCR narratives with AI",
+  icons: { icon: "/favicon.png", apple: "/favicon.png" },
 };
 
 export const viewport: Viewport = {
