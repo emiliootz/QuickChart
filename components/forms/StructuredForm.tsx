@@ -107,6 +107,22 @@ const DPH_HOSPITALS: HospitalOption[] = [
   { value: "Western Massachusetts Hospital in Westfield, MA", label: "Western Massachusetts Hospital — Westfield" },
 ];
 
+const VET_HOSPITALS: HospitalOption[] = [
+  { value: "BluePearl Pet Hospital in Boston, MA", label: "BluePearl Pet Hospital — Boston" },
+  { value: "BluePearl Pet Hospital in Framingham, MA", label: "BluePearl Pet Hospital — Framingham" },
+  { value: "Bulger Veterinary Hospital in Lawrence, MA", label: "Bulger Veterinary Hospital — Lawrence" },
+  { value: "Cape Cod Veterinary Specialists in Bourne, MA", label: "Cape Cod Veterinary Specialists — Bourne" },
+  { value: "Cummings Veterinary Medical Center, Tufts University in North Grafton, MA", label: "Cummings Veterinary Medical Center (Tufts) — North Grafton" },
+  { value: "Massachusetts Veterinary Referral Hospital in Woburn, MA", label: "Massachusetts Veterinary Referral Hospital — Woburn" },
+  { value: "MSPCA Angell-West in Waltham, MA", label: "MSPCA Angell-West — Waltham" },
+  { value: "MSPCA-Angell Animal Medical Center in Boston, MA", label: "MSPCA-Angell Animal Medical Center — Boston" },
+  { value: "Tufts Veterinary Emergency Treatment & Specialties in Walpole, MA", label: "Tufts Veterinary Emergency Treatment & Specialties — Walpole" },
+  { value: "VCA South Shore Animal Hospital in Weymouth, MA", label: "VCA South Shore Animal Hospital — Weymouth" },
+  { value: "Veterinary Emergency & Specialty Hospital in South Deerfield, MA", label: "Veterinary Emergency & Specialty Hospital — South Deerfield" },
+  { value: "Veterinary Emergency and Specialty Hospital (VESH) in West Springfield, MA", label: "VESH — West Springfield" },
+  { value: "Westford Veterinary Emergency Referral Center in Westford, MA", label: "Westford Veterinary Emergency Referral Center — Westford" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
@@ -242,9 +258,21 @@ export default function StructuredForm() {
             <option value="">Select...</option>
             <option value="Residence">Residence</option>
             <option value="Hospital">Hospital</option>
+            <option value="Veterinary Hospital">Veterinary Hospital</option>
             <option value="__other__">Other (enter manually)</option>
           </select>
         </Field>
+
+        {sceneLocation === "Veterinary Hospital" && (
+          <Field label="Veterinary Hospital">
+            <select {...register("sceneHospitalName")} className={inputCls}>
+              <option value="">Select hospital...</option>
+              {VET_HOSPITALS.map((h) => (
+                <option key={h.value} value={h.value}>{h.label}</option>
+              ))}
+            </select>
+          </Field>
+        )}
 
         {sceneLocation === "__other__" && (
           <Field label="Scene Location (specify)">
