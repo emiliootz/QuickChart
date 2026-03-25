@@ -1,12 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-blue-800 text-white h-14 flex items-center px-4 shadow-md">
-      <Link href="/" className="flex items-center gap-2 no-underline">
-        <span className="text-red-400 text-2xl font-bold leading-none">+</span>
-        <span className="font-bold text-lg tracking-tight">QuickChart</span>
-        <span className="text-blue-300 text-sm hidden sm:inline">EMS PCR Generator</span>
+    <header className="sticky top-0 z-50 bg-white flex items-center px-4 shadow-md border-b border-slate-200">
+      <Link href="/" className="flex items-center no-underline">
+        <Image src="/logo.png" alt="QuickChart" height={44} width={220} priority className="py-3" />
       </Link>
     </header>
   );
