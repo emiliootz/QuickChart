@@ -165,7 +165,7 @@ export default function StructuredForm() {
   const model = "claude-sonnet-4-6" as const;
   const { status, narrative, error, generate, reset } = useNarrativeGeneration();
 
-  const { register, handleSubmit, watch, setValue, reset: resetForm } = useForm<StructuredFormData>({
+  const { register, handleSubmit, watch, setValue, reset: resetForm, getValues } = useForm<StructuredFormData>({
     defaultValues: {
       ambulanceNumber: "",
       transportType: "",
@@ -787,13 +787,45 @@ export default function StructuredForm() {
         </div>
 
         {status === "complete" && (
-          <button
-            type="button"
-            onClick={() => { reset(); resetForm(); }}
-            className="w-full mt-2 rounded-lg border border-red-300 px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 active:bg-red-100 transition-colors"
-          >
-            New Call — Clear All Fields
-          </button>
+          <div className="flex flex-col gap-2 mt-2">
+            <button
+              type="button"
+              onClick={() => {
+                const d = getValues();
+                const returnData: StructuredFormData = {
+                  ...d,
+                  sceneLocation: d.destination,
+                  sceneLocationCustom: d.destinationCustom,
+                  sceneHospitalSystem: d.destinationHospitalSystem,
+                  sceneHospitalName: d.destinationHospitalName,
+                  sceneHospitalCampus: d.destinationHospitalCampus,
+                  sceneHospitalCustom: d.destinationHospitalCustom,
+                  sceneFloorRoom: d.destinationRoom,
+                  destination: d.sceneLocation,
+                  destinationCustom: d.sceneLocationCustom,
+                  destinationHospitalSystem: d.sceneHospitalSystem,
+                  destinationHospitalName: d.sceneHospitalName,
+                  destinationHospitalCampus: d.sceneHospitalCampus,
+                  destinationHospitalCustom: d.sceneHospitalCustom,
+                  destinationRoom: d.sceneFloorRoom,
+                };
+                generate({ model, structuredData: returnData });
+                setTimeout(() => {
+                  document.getElementById("narrative-output")?.scrollIntoView({ behavior: "smooth" });
+                }, 300);
+              }}
+              className="w-full rounded-lg border border-blue-500 px-4 py-3 text-sm font-semibold text-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors"
+            >
+              Generate Return Trip Narrative
+            </button>
+            <button
+              type="button"
+              onClick={() => { reset(); resetForm(); }}
+              className="w-full rounded-lg border border-red-300 px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 active:bg-red-100 transition-colors"
+            >
+              New Call — Clear All Fields
+            </button>
+          </div>
         )}
       </div>
     </form>
