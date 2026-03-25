@@ -165,7 +165,7 @@ export default function StructuredForm() {
   const model = "claude-sonnet-4-6" as const;
   const { status, narrative, error, generate, reset } = useNarrativeGeneration();
 
-  const { register, handleSubmit, watch, setValue } = useForm<StructuredFormData>({
+  const { register, handleSubmit, watch, setValue, reset: resetForm } = useForm<StructuredFormData>({
     defaultValues: {
       ambulanceNumber: "",
       transportType: "",
@@ -785,6 +785,16 @@ export default function StructuredForm() {
             onRegenerate={reset}
           />
         </div>
+
+        {status === "complete" && (
+          <button
+            type="button"
+            onClick={() => { reset(); resetForm(); }}
+            className="w-full mt-2 rounded-lg border border-red-300 px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 active:bg-red-100 transition-colors"
+          >
+            New Call — Clear All Fields
+          </button>
+        )}
       </div>
     </form>
   );
