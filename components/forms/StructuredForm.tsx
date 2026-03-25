@@ -564,7 +564,7 @@ export default function StructuredForm() {
         )}
 
         <div className="grid grid-cols-3 gap-4">
-          <Field label="Blood Pressure">
+          <Field label="BP">
             <select {...register("bloodPressure")} className={inputCls}>
               <option value="">Select...</option>
               <option value="Normal (at Baseline)">Normal (at Baseline)</option>
@@ -590,12 +590,12 @@ export default function StructuredForm() {
         </div>
 
         {bloodPressure === "Hypertensive" && (
-          <Field label="Blood Pressure — specify">
+          <Field label="BP — specify">
             <input {...register("bloodPressureNote")} type="text" placeholder="e.g. 180/110 mmHg, history of hypertension" className={inputCls} />
           </Field>
         )}
         {bloodPressure === "Hypotensive" && (
-          <Field label="Blood Pressure — specify">
+          <Field label="BP — specify">
             <input {...register("bloodPressureNote")} type="text" placeholder="e.g. 88/50 mmHg, suspected dehydration" className={inputCls} />
           </Field>
         )}
