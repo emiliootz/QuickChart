@@ -677,9 +677,21 @@ export default function StructuredForm() {
             <option value="">Select...</option>
             <option value="Residence">Residence</option>
             <option value="Hospital">Hospital</option>
+            <option value="Veterinary Hospital">Veterinary Hospital</option>
             <option value="__other__">Other (enter manually)</option>
           </select>
         </Field>
+
+        {destination === "Veterinary Hospital" && (
+          <Field label="Veterinary Hospital">
+            <select {...register("destinationHospitalName")} className={inputCls}>
+              <option value="">Select hospital...</option>
+              {VET_HOSPITALS.map((h) => (
+                <option key={h.value} value={h.value}>{h.label}</option>
+              ))}
+            </select>
+          </Field>
+        )}
 
         {destination === "__other__" && (
           <Field label="Destination (specify)">
