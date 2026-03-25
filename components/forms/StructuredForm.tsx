@@ -200,6 +200,12 @@ export default function StructuredForm() {
       circulation: "",
       skin: "",
       skinCustom: "",
+      bloodPressure: "",
+      bloodPressureNote: "",
+      heartRate: "",
+      heartRateNote: "",
+      spo2: "",
+      spo2Note: "",
       patientComplaints: "",
       mobilityLevel: "",
       transferType: "",
@@ -217,6 +223,9 @@ export default function StructuredForm() {
   const destinationHospitalName = watch("destinationHospitalName");
   const transportPosition = watch("transportPosition");
   const transportReason = watch("transportReason");
+  const bloodPressure = watch("bloodPressure");
+  const heartRate = watch("heartRate");
+  const spo2 = watch("spo2");
   const isGenerating = status === "loading" || status === "streaming";
 
   async function onSubmit(data: StructuredFormData) {
@@ -493,6 +502,9 @@ export default function StructuredForm() {
             setValue("breathing", "Unlabored");
             setValue("circulation", "Adequate");
             setValue("skin", "warm and dry");
+            setValue("bloodPressure", "Normal (at Baseline)");
+            setValue("heartRate", "Normal (at Baseline)");
+            setValue("spo2", "Normal (at Baseline)");
           }}
           className="w-full rounded-lg border border-green-600 px-4 py-3 text-sm font-semibold text-green-700 hover:bg-green-50 active:bg-green-100 transition-colors"
         >
@@ -548,6 +560,58 @@ export default function StructuredForm() {
               placeholder="Describe skin condition"
               className={inputCls}
             />
+          </Field>
+        )}
+
+        <div className="grid grid-cols-3 gap-4">
+          <Field label="Blood Pressure">
+            <select {...register("bloodPressure")} className={inputCls}>
+              <option value="">Select...</option>
+              <option value="Normal (at Baseline)">Normal (at Baseline)</option>
+              <option value="Hypertensive">Hypertensive</option>
+              <option value="Hypotensive">Hypotensive</option>
+            </select>
+          </Field>
+          <Field label="Heart Rate">
+            <select {...register("heartRate")} className={inputCls}>
+              <option value="">Select...</option>
+              <option value="Normal (at Baseline)">Normal (at Baseline)</option>
+              <option value="Tachycardic">Tachycardic</option>
+              <option value="Bradycardic">Bradycardic</option>
+            </select>
+          </Field>
+          <Field label="SPO2">
+            <select {...register("spo2")} className={inputCls}>
+              <option value="">Select...</option>
+              <option value="Normal (at Baseline)">Normal (at Baseline)</option>
+              <option value="Hypoxic">Hypoxic</option>
+            </select>
+          </Field>
+        </div>
+
+        {bloodPressure === "Hypertensive" && (
+          <Field label="Blood Pressure — specify">
+            <input {...register("bloodPressureNote")} type="text" placeholder="e.g. 180/110 mmHg, history of hypertension" className={inputCls} />
+          </Field>
+        )}
+        {bloodPressure === "Hypotensive" && (
+          <Field label="Blood Pressure — specify">
+            <input {...register("bloodPressureNote")} type="text" placeholder="e.g. 88/50 mmHg, suspected dehydration" className={inputCls} />
+          </Field>
+        )}
+        {heartRate === "Tachycardic" && (
+          <Field label="Heart Rate — specify">
+            <input {...register("heartRateNote")} type="text" placeholder="e.g. HR 130 bpm, anxiety / pain" className={inputCls} />
+          </Field>
+        )}
+        {heartRate === "Bradycardic" && (
+          <Field label="Heart Rate — specify">
+            <input {...register("heartRateNote")} type="text" placeholder="e.g. HR 42 bpm, on beta-blockers" className={inputCls} />
+          </Field>
+        )}
+        {spo2 === "Hypoxic" && (
+          <Field label="SPO2 — specify">
+            <input {...register("spo2Note")} type="text" placeholder="e.g. SpO2 88% on room air" className={inputCls} />
           </Field>
         )}
 

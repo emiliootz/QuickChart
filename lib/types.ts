@@ -34,6 +34,12 @@ export interface StructuredFormData {
   circulation: string;
   skin: string;
   skinCustom: string;
+  bloodPressure: string;
+  bloodPressureNote: string;
+  heartRate: string;
+  heartRateNote: string;
+  spo2: string;
+  spo2Note: string;
   patientComplaints: string;
   mobilityLevel: string;
   transferType: string;
