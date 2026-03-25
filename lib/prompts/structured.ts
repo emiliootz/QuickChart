@@ -71,6 +71,16 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
   const resolvedSkin =
     data.skin === "__other__" ? data.skinCustom : data.skin;
 
+  function resolveVital(value: string, note: string, abnormalLabel: string): string {
+    if (!value) return "";
+    if (value === "Normal (at Baseline)") return "within normal limits / at patient's baseline";
+    return note ? `${abnormalLabel} — ${note}` : abnormalLabel;
+  }
+
+  const resolvedBP = resolveVital(data.bloodPressure, data.bloodPressureNote, data.bloodPressure);
+  const resolvedHR = resolveVital(data.heartRate, data.heartRateNote, data.heartRate);
+  const resolvedSPO2 = resolveVital(data.spo2, data.spo2Note, data.spo2);
+
   // Resolve transport reason with conditional details
   let resolvedTransportReason = "";
   if (data.transportReason === "Other") {
@@ -102,6 +112,9 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
     `EMS Assessment — Breathing: ${data.breathing}`,
     `EMS Assessment — Circulation: ${data.circulation}`,
     `EMS Assessment — Skin: ${resolvedSkin}`,
+    `EMS Assessment — Blood Pressure: ${resolvedBP}`,
+    `EMS Assessment — Heart Rate: ${resolvedHR}`,
+    `EMS Assessment — SPO2: ${resolvedSPO2}`,
     `Mobility Level: ${data.mobilityLevel}`,
     `Transfer Method: ${data.transferType}`,
     `Transport Position: ${resolvedPosition}`,
