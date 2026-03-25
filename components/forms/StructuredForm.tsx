@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { useNarrativeGeneration } from "@/hooks/useNarrativeGeneration";
@@ -226,7 +227,14 @@ export default function StructuredForm() {
   const bloodPressure = watch("bloodPressure");
   const heartRate = watch("heartRate");
   const spo2 = watch("spo2");
+  const mobilityLevel = watch("mobilityLevel");
   const isGenerating = status === "loading" || status === "streaming";
+
+  useEffect(() => {
+    if (mobilityLevel === "Non-Ambulatory") setValue("transferType", "Sheet Draw Method");
+    else if (mobilityLevel === "Ambulatory") setValue("transferType", "Ambulation");
+    else if (mobilityLevel === "Stand and Pivot") setValue("transferType", "");
+  }, [mobilityLevel, setValue]);
 
   async function onSubmit(data: StructuredFormData) {
     await generate({ model, structuredData: data });
@@ -637,13 +645,20 @@ export default function StructuredForm() {
             </select>
           </Field>
           <Field label="Transfer Method">
-            <select {...register("transferType")} className={inputCls}>
-              <option value="">Select...</option>
-              <option value="Stand & Pivot 2x Assist">Stand & Pivot 2x Assist</option>
-              <option value="Stand & Pivot 1x Assist">Stand & Pivot 1x Assist</option>
-              <option value="Ambulation">Ambulation</option>
-              <option value="Sheet Draw Method">Sheet Draw Method</option>
-            </select>
+            {mobilityLevel === "Stand and Pivot" ? (
+              <select {...register("transferType")} className={inputCls}>
+                <option value="">Select...</option>
+                <option value="Stand & Pivot 2x Assist">Stand & Pivot 2x Assist</option>
+                <option value="Stand & Pivot 1x Assist">Stand & Pivot 1x Assist</option>
+              </select>
+            ) : (
+              <input
+                readOnly
+                value={mobilityLevel === "Non-Ambulatory" ? "Sheet Draw Method" : mobilityLevel === "Ambulatory" ? "Ambulation" : ""}
+                placeholder="Select mobility first..."
+                className={cn(inputCls, "bg-slate-50 text-slate-500 cursor-not-allowed")}
+              />
+            )}
           </Field>
         </div>
 
