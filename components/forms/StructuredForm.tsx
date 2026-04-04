@@ -174,6 +174,11 @@ const TUFTS_HOSPITALS: HospitalOption[] = [
   { value: "Lowell General Hospital in Lowell, MA", label: "Lowell General Hospital — Lowell" },
 ];
 
+const DFCI_HOSPITALS: HospitalOption[] = [
+  { value: "Dana-Farber Cancer Institute in Boston, MA", label: "Dana-Farber — Longwood" },
+  { value: "Dana-Farber Cancer Institute in Newton, MA", label: "Dana-Farber — Chestnut Hill" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
@@ -181,6 +186,7 @@ const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Boston Medical Center Health System": BMC_HOSPITALS,
   "Cambridge Health Alliance": CHA_HOSPITALS,
   "CareOne": CAREONE_HOSPITALS,
+  "Dana-Farber Cancer Institute": DFCI_HOSPITALS,
   "Encompass Health": ENCOMPASS_HOSPITALS,
   "Massachusetts Department of Public Health (DPH)": DPH_HOSPITALS,
   "Tufts Medicine": TUFTS_HOSPITALS,
@@ -365,6 +371,7 @@ export default function StructuredForm() {
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Dana-Farber Cancer Institute">Dana-Farber Cancer Institute</option>
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
@@ -786,6 +793,7 @@ export default function StructuredForm() {
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Dana-Farber Cancer Institute">Dana-Farber Cancer Institute</option>
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
