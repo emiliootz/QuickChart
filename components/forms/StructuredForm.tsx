@@ -142,6 +142,18 @@ const CAREONE_HOSPITALS: HospitalOption[] = [
   { value: "CareOne at Wilmington in Wilmington, MA", label: "CareOne at Wilmington — Wilmington" },
 ];
 
+const BCH_HOSPITALS: HospitalOption[] = [
+  { value: "Boston Children's Hospital in Boston, MA", label: "Boston Children's Hospital — Boston" },
+  { value: "Boston Children's Brookline in Brookline, MA", label: "Boston Children's — Brookline" },
+  { value: "Boston Children's Lexington in Lexington, MA", label: "Boston Children's — Lexington" },
+  { value: "Boston Children's Martha Eliot in Boston, MA", label: "Boston Children's Martha Eliot — Boston" },
+  { value: "Boston Children's Needham in Needham, MA", label: "Boston Children's — Needham" },
+  { value: "Boston Children's North Dartmouth in North Dartmouth, MA", label: "Boston Children's — North Dartmouth" },
+  { value: "Boston Children's Peabody in Peabody, MA", label: "Boston Children's — Peabody" },
+  { value: "Boston Children's Waltham in Waltham, MA", label: "Boston Children's — Waltham" },
+  { value: "Boston Children's Weymouth in Weymouth, MA", label: "Boston Children's — Weymouth" },
+];
+
 const ENCOMPASS_HOSPITALS: HospitalOption[] = [
   { value: "Encompass Health Rehabilitation Hospital of Braintree in Braintree, MA", label: "Encompass Health Rehab — Braintree" },
   { value: "Encompass Health Rehabilitation Hospital of Braintree at Framingham in Framingham, MA", label: "Encompass Health Rehab — Framingham" },
@@ -158,6 +170,7 @@ const ENCOMPASS_HOSPITALS: HospitalOption[] = [
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
+  "Boston Children's": BCH_HOSPITALS,
   "Boston Medical Center Health System": BMC_HOSPITALS,
   "Cambridge Health Alliance": CHA_HOSPITALS,
   "CareOne": CAREONE_HOSPITALS,
@@ -340,6 +353,7 @@ export default function StructuredForm() {
             <select {...register("sceneHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Children's">Boston Children&apos;s</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
@@ -759,6 +773,7 @@ export default function StructuredForm() {
             <select {...register("destinationHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Children's">Boston Children&apos;s</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
