@@ -142,12 +142,26 @@ const CAREONE_HOSPITALS: HospitalOption[] = [
   { value: "CareOne at Wilmington in Wilmington, MA", label: "CareOne at Wilmington — Wilmington" },
 ];
 
+const ENCOMPASS_HOSPITALS: HospitalOption[] = [
+  { value: "Encompass Health Rehabilitation Hospital of Braintree in Braintree, MA", label: "Encompass Health Rehab — Braintree" },
+  { value: "Encompass Health Rehabilitation Hospital of Braintree at Framingham in Framingham, MA", label: "Encompass Health Rehab — Framingham" },
+  { value: "Encompass Health Rehabilitation Hospital of Concord in Concord, NH", label: "Encompass Health Rehab — Concord, NH" },
+  { value: "Encompass Health Rehabilitation Hospital of Johnston in Johnston, RI", label: "Encompass Health Rehab — Johnston, RI" },
+  { value: "Encompass Health Rehabilitation Hospital of New England in Woburn, MA", label: "Encompass Health Rehab of New England — Woburn" },
+  { value: "Encompass Health Rehabilitation Hospital of New England at Beverly in Beverly, MA", label: "Encompass Health Rehab of New England — Beverly" },
+  { value: "Encompass Health Rehabilitation Hospital of New England at Lowell in Lowell, MA", label: "Encompass Health Rehab of New England — Lowell" },
+  { value: "Encompass Health Rehabilitation Hospital of Western Massachusetts in Ludlow, MA", label: "Encompass Health Rehab of Western MA — Ludlow" },
+  { value: "Fairlawn Rehabilitation Hospital in Worcester, MA", label: "Fairlawn Rehabilitation Hospital — Worcester" },
+  { value: "New England Rehabilitation Hospital of Portland, a Joint Venture of Maine Medical Center and Encompass Health, in Portland, ME", label: "New England Rehabilitation Hospital of Portland — Portland, ME" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
   "Boston Medical Center Health System": BMC_HOSPITALS,
   "Cambridge Health Alliance": CHA_HOSPITALS,
   "CareOne": CAREONE_HOSPITALS,
+  "Encompass Health": ENCOMPASS_HOSPITALS,
   "Massachusetts Department of Public Health (DPH)": DPH_HOSPITALS,
   "Universal Health Services (Arbour Health)": UHS_HOSPITALS,
 };
@@ -329,6 +343,7 @@ export default function StructuredForm() {
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
@@ -747,6 +762,7 @@ export default function StructuredForm() {
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
