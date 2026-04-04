@@ -36,6 +36,9 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
       data.sceneHospitalCustom
     );
     if (data.sceneFloorRoom) resolvedScene += `, ${data.sceneFloorRoom}`;
+  } else if (data.sceneLocation === "Veterinary Hospital") {
+    resolvedScene = data.sceneHospitalName || "Veterinary Hospital";
+    if (data.sceneFloorRoom) resolvedScene += `, ${data.sceneFloorRoom}`;
   } else if (data.sceneLocation === "__other__") {
     resolvedScene = data.sceneLocationCustom;
     if (data.sceneFloorRoom) resolvedScene += `, ${data.sceneFloorRoom}`;
@@ -53,6 +56,9 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
       data.destinationHospitalCampus,
       data.destinationHospitalCustom
     );
+    if (data.destinationRoom) resolvedDestination += `, ${data.destinationRoom}`;
+  } else if (data.destination === "Veterinary Hospital") {
+    resolvedDestination = data.destinationHospitalName || "Veterinary Hospital";
     if (data.destinationRoom) resolvedDestination += `, ${data.destinationRoom}`;
   } else if (data.destination === "__other__") {
     resolvedDestination = data.destinationCustom;
