@@ -167,6 +167,13 @@ const ENCOMPASS_HOSPITALS: HospitalOption[] = [
   { value: "New England Rehabilitation Hospital of Portland, a Joint Venture of Maine Medical Center and Encompass Health, in Portland, ME", label: "New England Rehabilitation Hospital of Portland — Portland, ME" },
 ];
 
+const TUFTS_HOSPITALS: HospitalOption[] = [
+  { value: "Tufts Medical Center in Boston, MA", label: "Tufts Medical Center — Boston" },
+  { value: "Melrose Wakefield Hospital in Melrose, MA", label: "Melrose Wakefield Hospital — Melrose" },
+  { value: "Lowell General Hospital - Saints Campus in Lowell, MA", label: "Lowell General Hospital — Saints Campus" },
+  { value: "Lowell General Hospital in Lowell, MA", label: "Lowell General Hospital — Lowell" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
@@ -176,6 +183,7 @@ const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "CareOne": CAREONE_HOSPITALS,
   "Encompass Health": ENCOMPASS_HOSPITALS,
   "Massachusetts Department of Public Health (DPH)": DPH_HOSPITALS,
+  "Tufts Medicine": TUFTS_HOSPITALS,
   "Universal Health Services (Arbour Health)": UHS_HOSPITALS,
 };
 
@@ -360,6 +368,7 @@ export default function StructuredForm() {
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Tufts Medicine">Tufts Medicine</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
@@ -780,6 +789,7 @@ export default function StructuredForm() {
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Tufts Medicine">Tufts Medicine</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
