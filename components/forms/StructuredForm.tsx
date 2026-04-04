@@ -54,10 +54,10 @@ const BILH_HOSPITALS: HospitalOption[] = [
   { value: "Addison Gilbert Hospital in Gloucester, MA", label: "Addison Gilbert Hospital — Gloucester" },
   { value: "Anna Jaques Hospital in Newburyport, MA", label: "Anna Jaques Hospital — Newburyport" },
   { value: "BayRidge Hospital in Lynn, MA", label: "BayRidge Hospital — Lynn" },
-  { value: "Beth Israel Deaconess Hospital-Milton in Milton, MA", label: "BID Hospital — Milton" },
-  { value: "Beth Israel Deaconess Hospital-Needham in Needham, MA", label: "BID Hospital — Needham" },
-  { value: "Beth Israel Deaconess Hospital-Plymouth in Plymouth, MA", label: "BID Hospital — Plymouth" },
-  { value: "__bidmc__", label: "Beth Israel Deaconess Medical Center — Boston" },
+  { value: "Beth Israel Deaconess Hospital-Milton in Milton, MA", label: "Beth Israel — Milton" },
+  { value: "Beth Israel Deaconess Hospital-Needham in Needham, MA", label: "Beth Israel — Needham" },
+  { value: "Beth Israel Deaconess Hospital-Plymouth in Plymouth, MA", label: "Beth Israel — Plymouth" },
+  { value: "__bidmc__", label: "Beth Israel — Boston" },
   { value: "Beverly Hospital in Beverly, MA", label: "Beverly Hospital — Beverly" },
   { value: "Exeter Hospital in Exeter, NH", label: "Exeter Hospital — Exeter, NH" },
   { value: "Lahey Hospital & Medical Center in Burlington, MA", label: "Lahey Hospital & Medical Center — Burlington" },
@@ -68,12 +68,12 @@ const BILH_HOSPITALS: HospitalOption[] = [
 ];
 
 const MGB_HOSPITALS: HospitalOption[] = [
-  { value: "Brigham and Women's Hospital in Boston, MA", label: "Brigham and Women's Hospital — Boston" },
-  { value: "Massachusetts General Hospital in Boston, MA", label: "Massachusetts General Hospital — Boston" },
-  { value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA", label: "Faulkner Hospital — Jamaica Plain" },
+  { value: "Brigham and Women's Hospital in Boston, MA", label: "Brigham and Women's — Boston" },
+  { value: "Massachusetts General Hospital in Boston, MA", label: "Mass General — Boston" },
+  { value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA", label: "Faulkner — Jamaica Plain" },
   { value: "Cooley Dickinson Hospital in Northampton, MA", label: "Cooley Dickinson Hospital — Northampton" },
   { value: "Martha's Vineyard Hospital in Oak Bluffs, MA", label: "Martha's Vineyard Hospital — Oak Bluffs" },
-  { value: "Massachusetts Eye and Ear in Boston, MA", label: "Massachusetts Eye and Ear — Boston" },
+  { value: "Massachusetts Eye and Ear in Boston, MA", label: "Mass Eye and Ear — Boston" },
   { value: "__mclean__", label: "McLean Hospital (choose campus)" },
   { value: "Nantucket Cottage Hospital in Nantucket, MA", label: "Nantucket Cottage Hospital — Nantucket" },
   { value: "Newton-Wellesley Hospital in Newton, MA", label: "Newton-Wellesley Hospital — Newton" },
@@ -103,7 +103,7 @@ const UHS_HOSPITALS: HospitalOption[] = [
 
 const DPH_HOSPITALS: HospitalOption[] = [
   { value: "Lemuel Shattuck Hospital in Jamaica Plain, MA", label: "Lemuel Shattuck Hospital — Jamaica Plain" },
-  { value: "Pappas Rehabilitation Hospital for Children in Canton, MA", label: "Pappas Rehabilitation Hospital for Children — Canton" },
+  { value: "Pappas Rehabilitation Hospital for Children in Canton, MA", label: "Pappas Rehab Hospital — Canton" },
   { value: "Tewksbury Hospital in Tewksbury, MA", label: "Tewksbury Hospital — Tewksbury" },
   { value: "Western Massachusetts Hospital in Westfield, MA", label: "Western Massachusetts Hospital — Westfield" },
 ];
@@ -142,6 +142,18 @@ const CAREONE_HOSPITALS: HospitalOption[] = [
   { value: "CareOne at Wilmington in Wilmington, MA", label: "CareOne at Wilmington — Wilmington" },
 ];
 
+const BCH_HOSPITALS: HospitalOption[] = [
+  { value: "Boston Children's Hospital in Boston, MA", label: "Boston Children's Hospital — Boston" },
+  { value: "Boston Children's Brookline in Brookline, MA", label: "Boston Children's — Brookline" },
+  { value: "Boston Children's Lexington in Lexington, MA", label: "Boston Children's — Lexington" },
+  { value: "Boston Children's Martha Eliot in Boston, MA", label: "Boston Children's Martha Eliot — Boston" },
+  { value: "Boston Children's Needham in Needham, MA", label: "Boston Children's — Needham" },
+  { value: "Boston Children's North Dartmouth in North Dartmouth, MA", label: "Boston Children's — North Dartmouth" },
+  { value: "Boston Children's Peabody in Peabody, MA", label: "Boston Children's — Peabody" },
+  { value: "Boston Children's Waltham in Waltham, MA", label: "Boston Children's — Waltham" },
+  { value: "Boston Children's Weymouth in Weymouth, MA", label: "Boston Children's — Weymouth" },
+];
+
 const ENCOMPASS_HOSPITALS: HospitalOption[] = [
   { value: "Encompass Health Rehabilitation Hospital of Braintree in Braintree, MA", label: "Encompass Health Rehab — Braintree" },
   { value: "Encompass Health Rehabilitation Hospital of Braintree at Framingham in Framingham, MA", label: "Encompass Health Rehab — Framingham" },
@@ -155,14 +167,29 @@ const ENCOMPASS_HOSPITALS: HospitalOption[] = [
   { value: "New England Rehabilitation Hospital of Portland, a Joint Venture of Maine Medical Center and Encompass Health, in Portland, ME", label: "New England Rehabilitation Hospital of Portland — Portland, ME" },
 ];
 
+const TUFTS_HOSPITALS: HospitalOption[] = [
+  { value: "Tufts Medical Center in Boston, MA", label: "Tufts Medical Center — Boston" },
+  { value: "Melrose Wakefield Hospital in Melrose, MA", label: "Melrose Wakefield Hospital — Melrose" },
+  { value: "Lowell General Hospital - Saints Campus in Lowell, MA", label: "Lowell General Hospital — Saints Campus" },
+  { value: "Lowell General Hospital in Lowell, MA", label: "Lowell General Hospital — Lowell" },
+];
+
+const DFCI_HOSPITALS: HospitalOption[] = [
+  { value: "Dana-Farber Cancer Institute in Boston, MA", label: "Dana-Farber — Longwood" },
+  { value: "Dana-Farber Cancer Institute in Newton, MA", label: "Dana-Farber — Chestnut Hill" },
+];
+
 const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Beth Israel Lahey Health": BILH_HOSPITALS,
   "Mass General Brigham": MGB_HOSPITALS,
+  "Boston Children's": BCH_HOSPITALS,
   "Boston Medical Center Health System": BMC_HOSPITALS,
   "Cambridge Health Alliance": CHA_HOSPITALS,
   "CareOne": CAREONE_HOSPITALS,
+  "Dana-Farber Cancer Institute": DFCI_HOSPITALS,
   "Encompass Health": ENCOMPASS_HOSPITALS,
   "Massachusetts Department of Public Health (DPH)": DPH_HOSPITALS,
+  "Tufts Medicine": TUFTS_HOSPITALS,
   "Universal Health Services (Arbour Health)": UHS_HOSPITALS,
 };
 
@@ -340,12 +367,15 @@ export default function StructuredForm() {
             <select {...register("sceneHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Children's">Boston Children&apos;s</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Dana-Farber Cancer Institute">Dana-Farber Cancer Institute</option>
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Tufts Medicine">Tufts Medicine</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
@@ -759,12 +789,15 @@ export default function StructuredForm() {
             <select {...register("destinationHospitalSystem")} className={inputCls}>
               <option value="">Select network...</option>
               <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
+              <option value="Boston Children's">Boston Children&apos;s</option>
               <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
               <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
               <option value="CareOne">CareOne</option>
+              <option value="Dana-Farber Cancer Institute">Dana-Farber Cancer Institute</option>
               <option value="Encompass Health">Encompass Health</option>
               <option value="Mass General Brigham">Mass General Brigham</option>
               <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
+              <option value="Tufts Medicine">Tufts Medicine</option>
               <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
               <option value="__other__">Other — enter manually</option>
             </select>
