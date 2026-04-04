@@ -54,10 +54,10 @@ const BILH_HOSPITALS: HospitalOption[] = [
   { value: "Addison Gilbert Hospital in Gloucester, MA", label: "Addison Gilbert Hospital — Gloucester" },
   { value: "Anna Jaques Hospital in Newburyport, MA", label: "Anna Jaques Hospital — Newburyport" },
   { value: "BayRidge Hospital in Lynn, MA", label: "BayRidge Hospital — Lynn" },
-  { value: "Beth Israel Deaconess Hospital-Milton in Milton, MA", label: "BID Hospital — Milton" },
-  { value: "Beth Israel Deaconess Hospital-Needham in Needham, MA", label: "BID Hospital — Needham" },
-  { value: "Beth Israel Deaconess Hospital-Plymouth in Plymouth, MA", label: "BID Hospital — Plymouth" },
-  { value: "__bidmc__", label: "Beth Israel Deaconess Medical Center — Boston" },
+  { value: "Beth Israel Deaconess Hospital-Milton in Milton, MA", label: "Beth Israel — Milton" },
+  { value: "Beth Israel Deaconess Hospital-Needham in Needham, MA", label: "Beth Israel — Needham" },
+  { value: "Beth Israel Deaconess Hospital-Plymouth in Plymouth, MA", label: "Beth Israel — Plymouth" },
+  { value: "__bidmc__", label: "Beth Israel — Boston" },
   { value: "Beverly Hospital in Beverly, MA", label: "Beverly Hospital — Beverly" },
   { value: "Exeter Hospital in Exeter, NH", label: "Exeter Hospital — Exeter, NH" },
   { value: "Lahey Hospital & Medical Center in Burlington, MA", label: "Lahey Hospital & Medical Center — Burlington" },
@@ -68,12 +68,12 @@ const BILH_HOSPITALS: HospitalOption[] = [
 ];
 
 const MGB_HOSPITALS: HospitalOption[] = [
-  { value: "Brigham and Women's Hospital in Boston, MA", label: "Brigham and Women's Hospital — Boston" },
-  { value: "Massachusetts General Hospital in Boston, MA", label: "Massachusetts General Hospital — Boston" },
-  { value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA", label: "Faulkner Hospital — Jamaica Plain" },
+  { value: "Brigham and Women's Hospital in Boston, MA", label: "Brigham and Women's — Boston" },
+  { value: "Massachusetts General Hospital in Boston, MA", label: "Mass General — Boston" },
+  { value: "Brigham and Women's Faulkner Hospital in Jamaica Plain, MA", label: "Faulkner — Jamaica Plain" },
   { value: "Cooley Dickinson Hospital in Northampton, MA", label: "Cooley Dickinson Hospital — Northampton" },
   { value: "Martha's Vineyard Hospital in Oak Bluffs, MA", label: "Martha's Vineyard Hospital — Oak Bluffs" },
-  { value: "Massachusetts Eye and Ear in Boston, MA", label: "Massachusetts Eye and Ear — Boston" },
+  { value: "Massachusetts Eye and Ear in Boston, MA", label: "Mass Eye and Ear — Boston" },
   { value: "__mclean__", label: "McLean Hospital (choose campus)" },
   { value: "Nantucket Cottage Hospital in Nantucket, MA", label: "Nantucket Cottage Hospital — Nantucket" },
   { value: "Newton-Wellesley Hospital in Newton, MA", label: "Newton-Wellesley Hospital — Newton" },
@@ -103,7 +103,7 @@ const UHS_HOSPITALS: HospitalOption[] = [
 
 const DPH_HOSPITALS: HospitalOption[] = [
   { value: "Lemuel Shattuck Hospital in Jamaica Plain, MA", label: "Lemuel Shattuck Hospital — Jamaica Plain" },
-  { value: "Pappas Rehabilitation Hospital for Children in Canton, MA", label: "Pappas Rehabilitation Hospital for Children — Canton" },
+  { value: "Pappas Rehabilitation Hospital for Children in Canton, MA", label: "Pappas Rehab Hospital — Canton" },
   { value: "Tewksbury Hospital in Tewksbury, MA", label: "Tewksbury Hospital — Tewksbury" },
   { value: "Western Massachusetts Hospital in Westfield, MA", label: "Western Massachusetts Hospital — Westfield" },
 ];
