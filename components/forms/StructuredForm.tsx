@@ -97,6 +97,7 @@ const DIAGNOSES: { full: string; abbr: string }[] = [
   { full: "Parkinson's disease", abbr: "Parkinson's dz" },
   { full: "Peptic ulcer disease", abbr: "PUD" },
   { full: "Pneumonia", abbr: "PNA" },
+  { full: "Polio", abbr: "Polio" },
   { full: "Post-traumatic stress disorder", abbr: "PTSD" },
   { full: "Prior heart attack", abbr: "Prior MI" },
   { full: "Pulmonary hypertension", abbr: "Pulm HTN" },
@@ -317,6 +318,7 @@ const CAREONE_HOSPITALS: HospitalOption[] = [
   { value: "CareOne at Redstone in East Longmeadow, MA", label: "CareOne at Redstone — East Longmeadow" },
   { value: "CareOne at Weymouth in Weymouth, MA", label: "CareOne at Weymouth — Weymouth" },
   { value: "CareOne at Wilmington in Wilmington, MA", label: "CareOne at Wilmington — Wilmington" },
+  { value: "CareOne at Sharon in Sharon, MA", label: "CareOne at Sharon — Sharon" },
 ];
 
 const BCH_HOSPITALS: HospitalOption[] = [
