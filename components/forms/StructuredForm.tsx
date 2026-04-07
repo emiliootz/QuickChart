@@ -235,9 +235,9 @@ function AddressAutocomplete({ value, onChange }: { value: string; onChange: (v:
 
     let autocomplete: google.maps.places.Autocomplete;
 
-    import("@googlemaps/js-api-loader").then(async ({ Loader }) => {
-      const loader = new Loader({ apiKey, version: "weekly" });
-      await loader.importLibrary("places");
+    import("@googlemaps/js-api-loader").then(async ({ setOptions, importLibrary }) => {
+      setOptions({ key: apiKey });
+      await importLibrary("places");
       if (!inputRef.current) return;
       autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
         types: ["address"],
