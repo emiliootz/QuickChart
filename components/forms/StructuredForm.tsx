@@ -224,6 +224,48 @@ function MedHistoryInput({ value, onChange }: { value: string; onChange: (v: str
   );
 }
 
+// ─── Address Autocomplete ────────────────────────────────────────────────────
+
+function AddressAutocomplete({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    if (!apiKey || !inputRef.current) return;
+
+    let autocomplete: google.maps.places.Autocomplete;
+
+    import("@googlemaps/js-api-loader").then(({ Loader }) => {
+      const loader = new Loader({ apiKey, libraries: ["places"] });
+      loader.load().then(() => {
+        if (!inputRef.current) return;
+        autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+          types: ["address"],
+          componentRestrictions: { country: "us" },
+        });
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          if (place.formatted_address) onChange(place.formatted_address);
+        });
+      });
+    });
+
+    return () => {
+      if (autocomplete) google.maps.event.clearInstanceListeners(autocomplete);
+    };
+  }, [onChange]);
+
+  return (
+    <input
+      ref={inputRef}
+      type="text"
+      defaultValue={value}
+      placeholder="Start typing an address..."
+      className={inputCls}
+    />
+  );
+}
+
 // ─── Hospital lists ───────────────────────────────────────────────────────────
 
 type HospitalOption = { value: string; label: string };
@@ -673,11 +715,9 @@ export default function StructuredForm() {
 
         {isEmergent && (
           <Field label="Patient Address">
-            <input
-              {...register("patientAddress")}
-              type="text"
-              placeholder="e.g. 123 Main St, Boston, MA 02101"
-              className={inputCls}
+            <AddressAutocomplete
+              value={watch("patientAddress")}
+              onChange={v => setValue("patientAddress", v)}
             />
           </Field>
         )}
