@@ -684,7 +684,7 @@ export default function StructuredForm() {
               <input
                 {...register("patientDOB")}
                 type="date"
-                className={inputCls}
+                className={cn(inputCls, "max-w-[180px]")}
               />
               {watch("patientAge") && (
                 <p className="text-xs text-slate-500 mt-1">Age: {watch("patientAge")} years old</p>
