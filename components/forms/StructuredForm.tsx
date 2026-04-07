@@ -235,18 +235,17 @@ function AddressAutocomplete({ value, onChange }: { value: string; onChange: (v:
 
     let autocomplete: google.maps.places.Autocomplete;
 
-    import("@googlemaps/js-api-loader").then(({ Loader }) => {
-      const loader = new Loader({ apiKey, libraries: ["places"] });
-      loader.load().then(() => {
-        if (!inputRef.current) return;
-        autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
-          types: ["address"],
-          componentRestrictions: { country: "us" },
-        });
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          if (place.formatted_address) onChange(place.formatted_address);
-        });
+    import("@googlemaps/js-api-loader").then(async ({ Loader }) => {
+      const loader = new Loader({ apiKey, version: "weekly" });
+      await loader.importLibrary("places");
+      if (!inputRef.current) return;
+      autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+        types: ["address"],
+        componentRestrictions: { country: "us" },
+      });
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (place.formatted_address) onChange(place.formatted_address);
       });
     });
 
