@@ -425,6 +425,8 @@ export default function StructuredForm() {
       destinationRoom: "",
       reportReceivedFrom: "",
       patientAge: "",
+      patientDOB: "",
+      patientAddress: "",
       patientGender: "",
       chiefComplaint: "",
       transportReason: "",
@@ -446,6 +448,9 @@ export default function StructuredForm() {
       heartRateNote: "",
       spo2: "",
       spo2Note: "",
+      painScore: "",
+      patientHeight: "",
+      patientWeight: "",
       patientComplaints: "",
       mobilityLevel: "",
       transferType: "",
@@ -467,6 +472,8 @@ export default function StructuredForm() {
   const heartRate = watch("heartRate");
   const spo2 = watch("spo2");
   const mobilityLevel = watch("mobilityLevel");
+  const transportType = watch("transportType");
+  const isEmergent = transportType === "Emergent Priority 1" || transportType === "Emergent Priority 2" || transportType === "Emergent Priority 3";
   const isGenerating = status === "loading" || status === "streaming";
 
   useEffect(() => {
@@ -474,6 +481,17 @@ export default function StructuredForm() {
     else if (mobilityLevel === "Ambulatory") setValue("transferType", "Ambulation");
     else if (mobilityLevel === "Stand and Pivot") setValue("transferType", "");
   }, [mobilityLevel, setValue]);
+
+  const patientDOB = watch("patientDOB");
+  useEffect(() => {
+    if (!patientDOB) return;
+    const birth = new Date(patientDOB);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    if (age >= 0) setValue("patientAge", String(age));
+  }, [patientDOB, setValue]);
 
   async function onSubmit(data: StructuredFormData) {
     await generate({ model, structuredData: data });
@@ -620,14 +638,29 @@ export default function StructuredForm() {
       {/* Patient */}
       <Card title="Patient">
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Age">
-            <input
-              {...register("patientAge")}
-              type="number"
-              placeholder="e.g. 75"
-              className={inputCls}
-            />
-          </Field>
+          {isEmergent ? (
+            <Field label="Date of Birth">
+              <input
+                {...register("patientDOB")}
+                type="date"
+                className={inputCls}
+              />
+              {watch("patientAge") && (
+                <p className="text-xs text-slate-500 mt-1">Age: {watch("patientAge")} years old</p>
+              )}
+            </Field>
+          ) : (
+            <Field label="Age">
+              <input
+                {...register("patientAge")}
+                type="number"
+                placeholder="e.g. 75"
+                className={inputCls}
+                maxLength={3}
+                onKeyDown={e => { if (!/^\d$/.test(e.key) && !["Backspace","Delete","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Tab"].includes(e.key)) e.preventDefault(); if (/^\d$/.test(e.key) && (e.target as HTMLInputElement).value.length >= 3) e.preventDefault(); }}
+              />
+            </Field>
+          )}
           <Field label="Gender">
             <select {...register("patientGender")} className={inputCls}>
               <option value="">Select...</option>
@@ -637,6 +670,17 @@ export default function StructuredForm() {
             </select>
           </Field>
         </div>
+
+        {isEmergent && (
+          <Field label="Patient Address">
+            <input
+              {...register("patientAddress")}
+              type="text"
+              placeholder="e.g. 123 Main St, Boston, MA 02101"
+              className={inputCls}
+            />
+          </Field>
+        )}
 
         <Field label="Chief Complaint">
           <input
@@ -863,6 +907,37 @@ export default function StructuredForm() {
           <Field label="SPO2 — specify">
             <input {...register("spo2Note")} type="text" placeholder="e.g. SpO2 88% on room air" className={inputCls} />
           </Field>
+        )}
+
+        {isEmergent && (
+          <div className="grid grid-cols-3 gap-4">
+            <Field label="Pain (0–10)">
+              <select {...register("painScore")} className={inputCls}>
+                <option value="">Select...</option>
+                {Array.from({ length: 11 }, (_, i) => (
+                  <option key={i} value={String(i)}>{i}</option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Height">
+              <select {...register("patientHeight")} className={inputCls}>
+                <option value="">Select...</option>
+                {Array.from({ length: 49 }, (_, i) => {
+                  const totalIn = 30 + i;
+                  const ft = Math.floor(totalIn / 12);
+                  const inches = totalIn % 12;
+                  return (
+                    <option key={totalIn} value={`${ft}ft ${inches}in (${totalIn} in)`}>
+                      {ft}ft {inches}in ({totalIn} in)
+                    </option>
+                  );
+                })}
+              </select>
+            </Field>
+            <Field label="Weight">
+              <input {...register("patientWeight")} type="number" min="1" max="999" placeholder="lbs" className={inputCls} onKeyDown={e => { if (!/^\d$/.test(e.key) && !["Backspace","Delete","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Tab"].includes(e.key)) e.preventDefault(); if (/^\d$/.test(e.key) && (e.target as HTMLInputElement).value.length >= 4) e.preventDefault(); }} />
+            </Field>
+          </div>
         )}
 
         <Field label="Patient Complaints">

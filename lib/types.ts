@@ -19,6 +19,8 @@ export interface StructuredFormData {
   destinationRoom: string;
   reportReceivedFrom: string;
   patientAge: string;
+  patientDOB: string;
+  patientAddress: string;
   patientGender: string;
   chiefComplaint: string;
   transportReason: string;
@@ -40,6 +42,9 @@ export interface StructuredFormData {
   heartRateNote: string;
   spo2: string;
   spo2Note: string;
+  painScore: string;
+  patientHeight: string;
+  patientWeight: string;
   patientComplaints: string;
   mobilityLevel: string;
   transferType: string;

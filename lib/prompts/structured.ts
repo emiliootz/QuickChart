@@ -109,7 +109,8 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
     `Scene: ${resolvedScene}`,
     `Destination: ${resolvedDestination}`,
     `Report Received From: ${data.reportReceivedFrom}`,
-    `Patient: ${data.patientAge}-year-old ${data.patientGender}`,
+    `Patient: ${data.patientAge}-year-old ${data.patientGender}${data.patientDOB ? ` (DOB: ${data.patientDOB})` : ""}`,
+    ...(data.patientAddress ? [`Patient Address: ${data.patientAddress}`] : []),
     `Chief Complaint: ${data.chiefComplaint}`,
     `Reason for Transport (Medical Necessity): ${resolvedTransportReason}`,
     `Mental Status: ${data.mentalStatus}`,
@@ -126,6 +127,15 @@ export function buildStructuredPrompt(data: StructuredFormData): string {
     `Transport Position: ${resolvedPosition}`,
   ];
 
+  if (data.painScore) {
+    lines.push(`Pain Score: ${data.painScore}/10`);
+  }
+  if (data.patientHeight && data.patientHeight.trim()) {
+    lines.push(`Height: ${data.patientHeight.trim()}`);
+  }
+  if (data.patientWeight && data.patientWeight.trim()) {
+    lines.push(`Weight: ${data.patientWeight.trim()}`);
+  }
   if (data.patientComplaints && data.patientComplaints.trim()) {
     lines.push(`Patient Complaints: ${data.patientComplaints.trim()}`);
   }
