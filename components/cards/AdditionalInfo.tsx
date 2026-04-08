@@ -1,5 +1,10 @@
 "use client";
 
+// AdditionalInfo — text area at the bottom of the form.
+// Lets the ems crew include anything not captured by the fields
+// (e.g. family present at bedside, scene details).
+// The content is appended verbatim to the AI prompt in the narrative builder.
+
 import { UseFormRegister } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";

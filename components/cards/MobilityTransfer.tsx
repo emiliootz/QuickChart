@@ -1,5 +1,19 @@
 "use client";
 
+// MobilityTransfer — how the patient moves and how they'll be positioned during transport.
+//
+// Mobility → Transfer Method auto-sync (useEffect):
+//   Most mobility levels map directly to a single transfer method, so the field
+//   is auto-filled and rendered as a read-only input:
+//     Non-Ambulatory  → Sheet Draw Method
+//     Ambulatory      → Ambulation
+//   "Stand and Pivot" is the exception — it has two valid options, so it renders
+//   a dropdown instead of the locked read-only input.
+//
+// Transport Position — "Other" option:
+//   Selecting "__other__" reveals a free-text field for positions not in the list
+//   (e.g. left lateral recumbent).
+
 import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
@@ -8,9 +22,9 @@ import { cn } from "@/lib/cn";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  setValue: UseFormSetValue<StructuredFormData>;
-  mobilityLevel: string;
-  transportPosition: string;
+  setValue: UseFormSetValue<StructuredFormData>;  // used to auto-write transferType when mobilityLevel changes
+  mobilityLevel: string;       // from use-form-watchers — drives transfer method display
+  transportPosition: string;   // from use-form-watchers — reveals free-text field for "Other"
 }
 
 export default function MobilityTransfer({

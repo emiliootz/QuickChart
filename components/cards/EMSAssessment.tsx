@@ -1,17 +1,36 @@
 "use client";
 
+// EMSAssessment — clinical findings documented by the EMS crew at the scene.
+//
+// "Set Normal" button:
+//   One-click shortcut that fills airway/breathing/circulation/skin and all three
+//   vitals with their normal baseline values. Useful for stable, routine transports.
+//
+// Vital sign note fields:
+//   BP, heart rate, and SpO2 each reveal a free-text note field when an abnormal
+//   value is selected (Hypertensive, Hypotensive, Tachycardic, Bradycardic, Hypoxic).
+//   This lets the crew record the actual reading and suspected cause.
+//
+// Skin — "Other" option:
+//   Selecting "__other__" in the skin dropdown reveals a free-text field for
+//   skin conditions not covered by the preset list.
+//
+// isEmergent gate:
+//   Emergent transports unlock three additional fields: Pain score (0–10),
+//   patient height, and patient weight. Not collected for routine transports.
+
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  control: Control<StructuredFormData>;
-  setValue: UseFormSetValue<StructuredFormData>;
-  isEmergent: boolean;
-  bloodPressure: string;
-  heartRate: string;
-  spo2: string;
+  control: Control<StructuredFormData>;  // needed for internal useWatch (skin field)
+  setValue: UseFormSetValue<StructuredFormData>;  // used by the "Set Normal" button
+  isEmergent: boolean;      // from use-form-watchers — unlocks pain, height, weight
+  bloodPressure: string;    // from use-form-watchers — shows BP note field when abnormal
+  heartRate: string;        // from use-form-watchers — shows HR note field when abnormal
+  spo2: string;             // from use-form-watchers — shows SpO2 note field when hypoxic
 }
 
 export default function EMSAssessment({
