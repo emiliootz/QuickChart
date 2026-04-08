@@ -1,12 +1,12 @@
 "use client";
 
-import { UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  watch: UseFormWatch<StructuredFormData>;
+  control: Control<StructuredFormData>;
   setValue: UseFormSetValue<StructuredFormData>;
   isEmergent: boolean;
   bloodPressure: string;
@@ -16,13 +16,14 @@ interface Props {
 
 export default function EMSAssessment({
   register,
-  watch,
+  control,
   setValue,
   isEmergent,
   bloodPressure,
   heartRate,
   spo2,
 }: Props) {
+  const skin = useWatch({ control, name: "skin" });
   return (
     <Card title="EMS Assessment">
       <button
@@ -83,7 +84,7 @@ export default function EMSAssessment({
         </select>
       </Field>
 
-      {watch("skin") === "__other__" && (
+      {skin === "__other__" && (
         <Field label="Skin (specify)">
           <input
             {...register("skinCustom")}

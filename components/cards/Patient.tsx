@@ -1,6 +1,6 @@
 "use client";
 
-import { UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 import { cn } from "@/lib/cn";
@@ -9,7 +9,7 @@ import MedHistoryInput from "@/components/forms/MedHistoryInput";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  watch: UseFormWatch<StructuredFormData>;
+  control: Control<StructuredFormData>;
   setValue: UseFormSetValue<StructuredFormData>;
   isEmergent: boolean;
   transportReason: string;
@@ -17,11 +17,14 @@ interface Props {
 
 export default function Patient({
   register,
-  watch,
+  control,
   setValue,
   isEmergent,
   transportReason,
 }: Props) {
+  const patientAge = useWatch({ control, name: "patientAge" });
+  const patientAddress = useWatch({ control, name: "patientAddress" });
+  const medicalHistory = useWatch({ control, name: "medicalHistory" });
   return (
     <Card title="Patient">
       <div className="grid grid-cols-2 gap-4">
@@ -32,8 +35,8 @@ export default function Patient({
               type="date"
               className={cn(inputCls)}
             />
-            {watch("patientAge") && (
-              <p className="text-xs text-slate-500 mt-1">Age: {watch("patientAge")} years old</p>
+            {patientAge && (
+              <p className="text-xs text-slate-500 mt-1">Age: {patientAge} years old</p>
             )}
           </Field>
         ) : (
@@ -64,7 +67,7 @@ export default function Patient({
       {isEmergent && (
         <Field label="Patient Address">
           <AddressAutocomplete
-            value={watch("patientAddress")}
+            value={patientAddress}
             onChange={v => setValue("patientAddress", v)}
           />
         </Field>
@@ -169,7 +172,7 @@ export default function Patient({
 
       <Field label="Medical History">
         <MedHistoryInput
-          value={watch("medicalHistory")}
+          value={medicalHistory}
           onChange={v => setValue("medicalHistory", v)}
         />
       </Field>
