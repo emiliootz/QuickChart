@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { useNarrativeGeneration } from "@/hooks/useNarrativeGeneration";
 import NarrativeOutput from "@/components/narrative/NarrativeOutput";
@@ -25,7 +25,7 @@ export default function StructuredForm() {
     "Did you think I was a magician who could pull a PCR narrative out of nothing?\n" +
     "Next time try actually doing your job and filling out the fields before hitting submit.";
 
-  const { register, handleSubmit, watch, setValue, reset: resetForm, getValues } = useForm<StructuredFormData>({
+  const { register, handleSubmit, control, setValue, reset: resetForm, getValues } = useForm<StructuredFormData>({
     defaultValues: {
       ambulanceNumber: "",
       transportType: "",
@@ -80,19 +80,19 @@ export default function StructuredForm() {
     },
   });
 
-  const sceneLocation = watch("sceneLocation");
-  const sceneHospitalSystem = watch("sceneHospitalSystem");
-  const sceneHospitalName = watch("sceneHospitalName");
-  const destination = watch("destination");
-  const destinationHospitalSystem = watch("destinationHospitalSystem");
-  const destinationHospitalName = watch("destinationHospitalName");
-  const transportPosition = watch("transportPosition");
-  const transportReason = watch("transportReason");
-  const bloodPressure = watch("bloodPressure");
-  const heartRate = watch("heartRate");
-  const spo2 = watch("spo2");
-  const mobilityLevel = watch("mobilityLevel");
-  const transportType = watch("transportType");
+  const sceneLocation = useWatch({ control, name: "sceneLocation" });
+  const sceneHospitalSystem = useWatch({ control, name: "sceneHospitalSystem" });
+  const sceneHospitalName = useWatch({ control, name: "sceneHospitalName" });
+  const destination = useWatch({ control, name: "destination" });
+  const destinationHospitalSystem = useWatch({ control, name: "destinationHospitalSystem" });
+  const destinationHospitalName = useWatch({ control, name: "destinationHospitalName" });
+  const transportPosition = useWatch({ control, name: "transportPosition" });
+  const transportReason = useWatch({ control, name: "transportReason" });
+  const bloodPressure = useWatch({ control, name: "bloodPressure" });
+  const heartRate = useWatch({ control, name: "heartRate" });
+  const spo2 = useWatch({ control, name: "spo2" });
+  const mobilityLevel = useWatch({ control, name: "mobilityLevel" });
+  const transportType = useWatch({ control, name: "transportType" });
   const isEmergent = transportType === "Emergent Priority 1" || transportType === "Emergent Priority 2" || transportType === "Emergent Priority 3";
   const isGenerating = status === "working..." || status === "relax im doing it";
 
@@ -102,7 +102,7 @@ export default function StructuredForm() {
     else if (mobilityLevel === "Stand and Pivot") setValue("transferType", "");
   }, [mobilityLevel, setValue]);
 
-  const patientDOB = watch("patientDOB");
+  const patientDOB = useWatch({ control, name: "patientDOB" });
   useEffect(() => {
     if (!patientDOB) return;
     const birth = new Date(patientDOB);
@@ -142,7 +142,7 @@ export default function StructuredForm() {
 
       <Patient
         register={register}
-        watch={watch}
+        control={control}
         setValue={setValue}
         isEmergent={isEmergent}
         transportReason={transportReason}
@@ -150,7 +150,7 @@ export default function StructuredForm() {
 
       <EMSAssessment
         register={register}
-        watch={watch}
+        control={control}
         setValue={setValue}
         isEmergent={isEmergent}
         bloodPressure={bloodPressure}
