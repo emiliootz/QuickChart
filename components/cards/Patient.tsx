@@ -194,10 +194,8 @@ export default function Patient({
           <option value="A&Ox3">A&Ox3</option>
           <option value="A&Ox2">A&Ox2</option>
           <option value="A&Ox1">A&Ox1</option>
-          <option value="Alert with Intermittent Confusion">Alert w/ Intermittent Confusion</option>
           <option value="Confused">Confused</option>
           <option value="Lethargic">Lethargic</option>
-          <option value="Obtunded">Obtunded</option>
           <option value="Unresponsive">Unresponsive</option>
         </select>
       </Field>
