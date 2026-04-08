@@ -1,21 +1,30 @@
 "use client";
 
-import { UseFormRegister } from "react-hook-form";
+import { useEffect } from "react";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 import { cn } from "@/lib/cn";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
+  setValue: UseFormSetValue<StructuredFormData>;
   mobilityLevel: string;
   transportPosition: string;
 }
 
 export default function MobilityTransfer({
   register,
+  setValue,
   mobilityLevel,
   transportPosition,
 }: Props) {
+  useEffect(() => {
+    if (mobilityLevel === "Non-Ambulatory") setValue("transferType", "Sheet Draw Method");
+    else if (mobilityLevel === "Ambulatory") setValue("transferType", "Ambulation");
+    else if (mobilityLevel === "Stand and Pivot") setValue("transferType", "");
+  }, [mobilityLevel, setValue]);
+
   return (
     <Card title="Mobility & Transfer">
       <div className="grid grid-cols-2 gap-4">

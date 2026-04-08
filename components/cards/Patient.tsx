@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/forms/FormLayout";
@@ -23,8 +24,19 @@ export default function Patient({
   transportReason,
 }: Props) {
   const patientAge = useWatch({ control, name: "patientAge" });
+  const patientDOB = useWatch({ control, name: "patientDOB" });
   const patientAddress = useWatch({ control, name: "patientAddress" });
   const medicalHistory = useWatch({ control, name: "medicalHistory" });
+
+  useEffect(() => {
+    if (!patientDOB) return;
+    const birth = new Date(patientDOB);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    if (age >= 0) setValue("patientAge", String(age));
+  }, [patientDOB, setValue]);
   return (
     <Card title="Patient">
       <div className="grid grid-cols-2 gap-4">
