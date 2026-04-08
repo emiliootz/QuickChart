@@ -26,7 +26,7 @@ export default function AcknowledgmentModal() {
 
   return (
     // Full-screen backdrop — blocks interaction with the app behind it
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-[60] flex items-start justify-center bg-black/60 p-4 overflow-y-auto">
       {/* Modal panel */}
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg my-8">
         {/* Header */}
