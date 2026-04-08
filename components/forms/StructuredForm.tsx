@@ -18,7 +18,12 @@ import { cn } from "@/lib/cn";
 
 export default function StructuredForm() {
   const model = "claude-sonnet-4-6" as const;
-  const { status, narrative, error, generate, reset } = useNarrativeGeneration();
+  const { status, narrative, error, generate, fail, reset } = useNarrativeGeneration();
+
+  const BLANK_FORM_MESSAGE =
+    "Congratulations, you just wasted both our time by sending a completely blank form.\n" +
+    "Did you think I was a magician who could pull a PCR narrative out of nothing?\n" +
+    "Next time try actually doing your job and filling out the fields before hitting submit.";
 
   const { register, handleSubmit, watch, setValue, reset: resetForm, getValues } = useForm<StructuredFormData>({
     defaultValues: {
@@ -89,7 +94,7 @@ export default function StructuredForm() {
   const mobilityLevel = watch("mobilityLevel");
   const transportType = watch("transportType");
   const isEmergent = transportType === "Emergent Priority 1" || transportType === "Emergent Priority 2" || transportType === "Emergent Priority 3";
-  const isGenerating = status === "loading" || status === "streaming";
+  const isGenerating = status === "working..." || status === "relax im doing it";
 
   useEffect(() => {
     if (mobilityLevel === "Non-Ambulatory") setValue("transferType", "Sheet Draw Method");
@@ -109,6 +114,15 @@ export default function StructuredForm() {
   }, [patientDOB, setValue]);
 
   async function onSubmit(data: StructuredFormData) {
+    const isBlank = !data.transportType && !data.sceneLocation && !data.destination &&
+      !data.chiefComplaint && !data.patientGender;
+    if (isBlank) {
+      fail(BLANK_FORM_MESSAGE);
+      setTimeout(() => {
+        document.getElementById("narrative-output")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+      return;
+    }
     await generate({ model, structuredData: data });
     setTimeout(() => {
       document.getElementById("narrative-output")?.scrollIntoView({ behavior: "smooth" });
@@ -183,7 +197,7 @@ export default function StructuredForm() {
           />
         </div>
 
-        {status === "complete" && (
+        {status === "ok im done" && (
           <div className="flex flex-col gap-2 mt-2">
             <button
               type="button"

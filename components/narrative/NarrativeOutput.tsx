@@ -3,7 +3,7 @@
 import { useClipboard } from "@/hooks/useClipboard";
 import { cn } from "@/lib/cn";
 
-type Status = "idle" | "loading" | "streaming" | "complete" | "error";
+type Status = "hurry up" | "working..." | "relax im doing it" | "ok im done" | "sucks for you";
 
 interface NarrativeOutputProps {
   status: Status;
@@ -20,12 +20,12 @@ export default function NarrativeOutput({
 }: NarrativeOutputProps) {
   const { copied, copy } = useClipboard();
 
-  if (status === "idle") return null;
+  if (status === "hurry up") return null;
 
-  const isStreaming = status === "streaming";
-  const isComplete = status === "complete";
-  const isLoading = status === "loading";
-  const isError = status === "error";
+  const isStreaming = status === "relax im doing it";
+  const isComplete = status === "ok im done";
+  const isLoading = status === "working...";
+  const isError = status === "sucks for you";
 
   return (
     <div className="rounded-xl border border-slate-200 overflow-hidden mt-4">
