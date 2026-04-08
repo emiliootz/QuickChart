@@ -51,11 +51,9 @@ export default function Scene({
         <select {...register("reportReceivedFrom")} className={inputCls}>
           <option value="">Select...</option>
           <option value="RN">RN</option>
-          <option value="LPN">LPN</option>
           <option value="MD/DO">MD/DO</option>
           <option value="Patient">Patient</option>
           <option value="Family/Caregiver">Family/Caregiver</option>
-          <option value="Nursing Staff">Nursing Staff</option>
           <option value="No Report Available">No Report Available</option>
         </select>
       </Field>
