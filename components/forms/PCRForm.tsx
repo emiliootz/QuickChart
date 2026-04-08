@@ -1,11 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useFormWatchers } from "@/hooks/useFormWatchers";
+import { useFormWatchers } from "@/hooks/use-form-watchers";
 import { StructuredFormData } from "@/lib/types";
 import { DEFAULT_FORM_VALUES } from "@/lib/defaults";
-import { useNarrativeGeneration } from "@/hooks/useNarrativeGeneration";
-import { useSubmit } from "@/hooks/useSubmit";
+import { useNarrativeGeneration } from "@/hooks/use-narrative-generation";
+import { useSubmit } from "@/hooks/use-submit";
 import Generate from "@/components/cards/Generate";
 import UnitTransport from "@/components/cards/UnitTransport";
 import Scene from "@/components/cards/Scene";

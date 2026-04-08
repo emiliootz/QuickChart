@@ -1,29 +1,29 @@
 export type { HospitalOption } from "./types";
 
-export { BILH_HOSPITALS } from "./BethIsrael";
-export { MGB_HOSPITALS } from "./MassGeneralBrigham";
-export { BMC_HOSPITALS } from "./BostonMedicalCenter";
-export { BCH_HOSPITALS } from "./BostonChildrens";
-export { CHA_HOSPITALS } from "./CambridgeHealthAlliance";
-export { CAREONE_HOSPITALS } from "./CareOne";
-export { DFCI_HOSPITALS } from "./DanaFarber";
-export { ENCOMPASS_HOSPITALS } from "./EncompassHealth";
-export { DPH_HOSPITALS } from "./MassDPH";
-export { TUFTS_HOSPITALS } from "./Tufts";
-export { UHS_HOSPITALS } from "./UniversalHealth";
-export { VET_HOSPITALS } from "./Veterinary";
+export { BILH_HOSPITALS } from "./beth-israel";
+export { MGB_HOSPITALS } from "./mass-general-brigham";
+export { BMC_HOSPITALS } from "./boston-medical-center";
+export { BCH_HOSPITALS } from "./boston-childrens";
+export { CHA_HOSPITALS } from "./cambridge-health-alliance";
+export { CAREONE_HOSPITALS } from "./care-one";
+export { DFCI_HOSPITALS } from "./dana-farber";
+export { ENCOMPASS_HOSPITALS } from "./encompass-health";
+export { DPH_HOSPITALS } from "./mass-dph";
+export { TUFTS_HOSPITALS } from "./tufts";
+export { UHS_HOSPITALS } from "./universal-health";
+export { VET_HOSPITALS } from "./veterinary";
 
-import { BILH_HOSPITALS } from "./BethIsrael";
-import { MGB_HOSPITALS } from "./MassGeneralBrigham";
-import { BCH_HOSPITALS } from "./BostonChildrens";
-import { BMC_HOSPITALS } from "./BostonMedicalCenter";
-import { CHA_HOSPITALS } from "./CambridgeHealthAlliance";
-import { CAREONE_HOSPITALS } from "./CareOne";
-import { DFCI_HOSPITALS } from "./DanaFarber";
-import { ENCOMPASS_HOSPITALS } from "./EncompassHealth";
-import { DPH_HOSPITALS } from "./MassDPH";
-import { TUFTS_HOSPITALS } from "./Tufts";
-import { UHS_HOSPITALS } from "./UniversalHealth";
+import { BILH_HOSPITALS } from "./beth-israel";
+import { MGB_HOSPITALS } from "./mass-general-brigham";
+import { BCH_HOSPITALS } from "./boston-childrens";
+import { BMC_HOSPITALS } from "./boston-medical-center";
+import { CHA_HOSPITALS } from "./cambridge-health-alliance";
+import { CAREONE_HOSPITALS } from "./care-one";
+import { DFCI_HOSPITALS } from "./dana-farber";
+import { ENCOMPASS_HOSPITALS } from "./encompass-health";
+import { DPH_HOSPITALS } from "./mass-dph";
+import { TUFTS_HOSPITALS } from "./tufts";
+import { UHS_HOSPITALS } from "./universal-health";
 import type { HospitalOption } from "./types";
 
 export const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {

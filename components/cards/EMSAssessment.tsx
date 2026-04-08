@@ -2,7 +2,7 @@
 
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/FormLayout";
+import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;

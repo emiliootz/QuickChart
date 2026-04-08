@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/FormLayout";
+import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 import { cn } from "@/lib/cn";
-import AddressAutocomplete from "@/components/forms/AddressAutocomplete";
-import MedHistoryInput from "@/components/forms/MedHistoryInput";
+import AddressAutocomplete from "@/components/ui/AddressAutocomplete";
+import MedHistory from "@/components/ui/MedHistory";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
@@ -183,7 +183,7 @@ export default function Patient({
       </Field>
 
       <Field label="Medical History">
-        <MedHistoryInput
+        <MedHistory
           value={medicalHistory}
           onChange={v => setValue("medicalHistory", v)}
         />
