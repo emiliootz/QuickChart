@@ -3,15 +3,15 @@
 import { useState } from "react";
 import { GenerateRequest } from "@/lib/types";
 
-type Status = "idle" | "loading" | "streaming" | "complete" | "error";
+type Status = "hurry up" | "working..." | "relax im doing it" | "ok im done" | "sucks for you";
 
 export function useNarrativeGeneration() {
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<Status>("hurry up");
   const [narrative, setNarrative] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   async function generate(request: GenerateRequest) {
-    setStatus("loading");
+    setStatus("working...");
     setNarrative("");
     setError(null);
 
@@ -27,7 +27,7 @@ export function useNarrativeGeneration() {
         throw new Error(data.error ?? "Failed to generate narrative");
       }
 
-      setStatus("streaming");
+      setStatus("relax im doing it");
 
       const reader = res.body!.getReader();
       const decoder = new TextDecoder();
@@ -39,19 +39,24 @@ export function useNarrativeGeneration() {
         setNarrative((prev) => prev + chunk);
       }
 
-      setStatus("complete");
+      setStatus("ok im done");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "An error occurred";
       setError(message);
-      setStatus("error");
+      setStatus("sucks for you");
     }
   }
 
+  function fail(message: string) {
+    setError(message);
+    setStatus("sucks for you");
+  }
+
   function reset() {
-    setStatus("idle");
+    setStatus("hurry up");
     setNarrative("");
     setError(null);
   }
 
-  return { status, narrative, error, generate, reset };
+  return { status, narrative, error, generate, fail, reset };
 }

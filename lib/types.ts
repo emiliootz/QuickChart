@@ -1,4 +1,4 @@
-export type AIModel = "claude-sonnet-4-6" | "claude-haiku-4-5-20251001";
+export type AIModel = "claude-sonnet-4-6";
 
 export interface StructuredFormData {
   ambulanceNumber: string;
