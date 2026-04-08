@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { GenerateRequest } from "@/lib/types";
 
-type Status = "hurry up" | "working..." | "relax im doing it" | "ok im done" | "sucks for you";
+export type Status = "hurry up" | "working..." | "relax im doing it" | "ok im done" | "sucks for you";
 
 export function useNarrativeGeneration() {
   const [status, setStatus] = useState<Status>("hurry up");

@@ -1,4 +1,4 @@
-import StructuredForm from "@/components/forms/StructuredForm";
+import PCRForm from "@/components/forms/PCRForm";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
           Fill in the fields below to generate a Medicare-compliant transport narrative.
         </p>
       </div>
-      <StructuredForm />
+      <PCRForm />
     </main>
   );
 }
