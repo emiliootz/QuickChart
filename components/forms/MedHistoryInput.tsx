@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { DIAGNOSES } from "@/lib/diagnoses";
-import { inputCls } from "@/components/forms/formHelpers";
+import { inputCls } from "@/components/forms/FormLayout";
 
 export default function MedHistoryInput({
   value,
