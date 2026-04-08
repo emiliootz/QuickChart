@@ -1,5 +1,25 @@
 "use client";
 
+// Patient — demographic and clinical context fields.
+//
+// DOB → Age auto-calculation:
+//   When the user picks a date of birth, a useEffect calculates the patient's
+//   current age in years and writes it to `patientAge` via setValue. This keeps
+//   both fields in sync without manual entry.
+//
+// isEmergent gate:
+//   When transportType is any Emergent Priority, additional fields unlock:
+//     - Date of Birth (instead of plain Age input) + the calculated age display
+//     - Patient Address (with Google Places autocomplete)
+//   These are not collected for non-emergent / routine transports.
+//
+// transportReason cascade:
+//   Certain reasons reveal a follow-up field:
+//     "On oxygen"     → Oxygen Delivery Method + Liters per Minute
+//     "Has a cast"    → Cast Type
+//     "Is sectioned"  → Section (12 or 21)
+//     "Other"         → free-text reason field
+
 import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
@@ -10,10 +30,10 @@ import MedHistory from "@/components/ui/MedHistory";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  control: Control<StructuredFormData>;
-  setValue: UseFormSetValue<StructuredFormData>;
-  isEmergent: boolean;
-  transportReason: string;
+  control: Control<StructuredFormData>;  // needed for internal useWatch calls
+  setValue: UseFormSetValue<StructuredFormData>;  // used to write calculated age back to form state
+  isEmergent: boolean;      // from use-form-watchers — unlocks DOB and address fields
+  transportReason: string;  // from use-form-watchers — drives transport reason sub-fields
 }
 
 export default function Patient({

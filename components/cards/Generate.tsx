@@ -1,5 +1,18 @@
 "use client";
 
+// Generate — the submit + output card at the bottom of the PCR form.
+//
+// Responsibilities:
+//   1. Renders the "Generate Narrative" submit button (disabled + label swap while generating).
+//   2. Displays the NarrativeOutput component, which shows streaming text, errors, or nothing
+//      depending on the current Status from use-narrative-generation.ts.
+//   3. Once status reaches "ok im done", reveals two follow-up actions:
+//        - "Generate Return Trip Narrative" — swaps scene/destination and re-runs generation
+//        - "New Call — Clear All Fields" — resets both the narrative state and the entire form
+//
+// BLANK_FORM_MESSAGE is shown by use-submit.ts when the user submits with no fields filled.
+// It's defined here (and exported) so it stays co-located with the Generate UI that displays it.
+
 export const BLANK_FORM_MESSAGE =
   "Congratulations, you just wasted both our time by sending a completely blank form.\n" +
   "Did you think I was a magician who could pull a PCR narrative out of nothing?\n" +
@@ -10,13 +23,13 @@ import NarrativeOutput from "@/components/narrative/NarrativeOutput";
 import { cn } from "@/lib/cn";
 
 interface Props {
-  isGenerating: boolean;
-  status: Status;
-  narrative: string;
-  error: string | null;
-  onReset: () => void;
-  onResetForm: () => void;
-  onReturnTrip: () => void;
+  isGenerating: boolean;    // true while status is "working..." or "relax im doing it"
+  status: Status;           // current generation state from use-narrative-generation
+  narrative: string;        // streamed narrative text to display
+  error: string | null;     // error message if generation failed
+  onReset: () => void;      // clears narrative state (used by Regenerate and Return Trip)
+  onResetForm: () => void;  // resets all form fields to default values (New Call button)
+  onReturnTrip: () => void; // triggers return trip generation with swapped scene/destination
 }
 
 export default function Generate({
