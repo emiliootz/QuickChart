@@ -8,7 +8,7 @@ interface Props {
   register: UseFormRegister<StructuredFormData>;
 }
 
-export default function UnitTransportCard({ register }: Props) {
+export default function UnitTransport({ register }: Props) {
   return (
     <Card title="Unit & Transport">
       <div className="grid grid-cols-2 gap-4">
