@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
-import AcknowledgmentModal from "@/components/layout/AcknowledgmentModal";
+import Acknowledgment from "@/components/layout/Acknowledgment";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} font-sans antialiased bg-slate-50`}>
-        <AcknowledgmentModal />
+        <Acknowledgment />
         <Header />
         {children}
       </body>

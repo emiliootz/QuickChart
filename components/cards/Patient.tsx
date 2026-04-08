@@ -2,7 +2,7 @@
 
 import { UseFormRegister, UseFormWatch, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/formHelpers";
+import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 import { cn } from "@/lib/cn";
 import AddressAutocomplete from "@/components/forms/AddressAutocomplete";
 import MedHistoryInput from "@/components/forms/MedHistoryInput";

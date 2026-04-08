@@ -2,7 +2,7 @@
 
 import { UseFormRegister } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/formHelpers";
+import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 import { HOSPITAL_SYSTEMS, VET_HOSPITALS, getCampusOptions } from "@/lib/hospitals";
 
 interface Props {

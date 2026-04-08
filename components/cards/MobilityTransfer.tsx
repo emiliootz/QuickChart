@@ -2,7 +2,7 @@
 
 import { UseFormRegister } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/formHelpers";
+import { Card, Field, inputCls } from "@/components/forms/FormLayout";
 import { cn } from "@/lib/cn";
 
 interface Props {
