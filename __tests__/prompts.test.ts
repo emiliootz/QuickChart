@@ -279,6 +279,233 @@ describe("Skin resolution", () => {
   });
 });
 
+// ─── Destination resolution ───────────────────────────────────────────────────
+
+describe("Destination hospital resolution", () => {
+  test("BILH — BIDMC with campus", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      destination: "Hospital",
+      destinationHospitalSystem: "Beth Israel Lahey Health",
+      destinationHospitalName: "__bidmc__",
+      destinationHospitalCampus: "West Campus",
+      destinationRoom: "ICU",
+    });
+    expect(prompt).toContain(
+      "Destination: Beth Israel Deaconess Medical Center West Campus in Boston, MA, ICU"
+    );
+  });
+
+  test("MGB — McLean campus resolves to campus value", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      destination: "Hospital",
+      destinationHospitalSystem: "Mass General Brigham",
+      destinationHospitalName: "__mclean__",
+      destinationHospitalCampus: "McLean Hospital Belmont Campus in Belmont, MA",
+    });
+    expect(prompt).toContain(
+      "Destination: McLean Hospital Belmont Campus in Belmont, MA"
+    );
+  });
+
+  test("Standard hospital with room", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      destination: "Hospital",
+      destinationHospitalSystem: "Mass General Brigham",
+      destinationHospitalName: "Massachusetts General Hospital in Boston, MA",
+      destinationHospitalCampus: "",
+      destinationRoom: "ED",
+    });
+    expect(prompt).toContain(
+      "Destination: Massachusetts General Hospital in Boston, MA, ED"
+    );
+  });
+
+  test("Veterinary Hospital destination", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      destination: "Veterinary Hospital",
+      destinationHospitalName: "MSPCA-Angell Animal Medical Center in Boston, MA",
+    });
+    expect(prompt).toContain(
+      "Destination: MSPCA-Angell Animal Medical Center in Boston, MA"
+    );
+  });
+
+  test("Custom destination", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      destination: "__other__",
+      destinationCustom: "456 Elm St, Cambridge MA",
+      destinationRoom: "Suite 3",
+    });
+    expect(prompt).toContain("Destination: 456 Elm St, Cambridge MA, Suite 3");
+  });
+});
+
+// ─── Veterinary Hospital scene ────────────────────────────────────────────────
+
+describe("Veterinary Hospital scene resolution", () => {
+  test("Resolves to hospital name", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      sceneLocation: "Veterinary Hospital",
+      sceneHospitalName: "BluePearl Pet Hospital in Boston, MA",
+    });
+    expect(prompt).toContain("Scene: BluePearl Pet Hospital in Boston, MA");
+  });
+});
+
+// ─── Vital signs resolution ───────────────────────────────────────────────────
+
+describe("Vital signs resolution", () => {
+  test("Normal BP resolves to baseline text", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      bloodPressure: "Normal (at Baseline)",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — Blood Pressure: within normal limits / at patient's baseline"
+    );
+  });
+
+  test("Abnormal BP with note includes note", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      bloodPressure: "Hypertensive",
+      bloodPressureNote: "180/110 mmHg",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — Blood Pressure: Hypertensive — 180/110 mmHg"
+    );
+  });
+
+  test("Abnormal BP without note uses label only", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      bloodPressure: "Hypotensive",
+      bloodPressureNote: "",
+    });
+    expect(prompt).toContain("EMS Assessment — Blood Pressure: Hypotensive");
+  });
+
+  test("Empty BP omitted from prompt", () => {
+    const prompt = buildStructuredPrompt({ ...base, bloodPressure: "" });
+    expect(prompt).toContain("EMS Assessment — Blood Pressure: ");
+  });
+
+  test("Normal HR resolves to baseline text", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      heartRate: "Normal (at Baseline)",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — Heart Rate: within normal limits / at patient's baseline"
+    );
+  });
+
+  test("Abnormal HR with note includes note", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      heartRate: "Tachycardic",
+      heartRateNote: "HR 130 bpm",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — Heart Rate: Tachycardic — HR 130 bpm"
+    );
+  });
+
+  test("Normal SPO2 resolves to baseline text", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      spo2: "Normal (at Baseline)",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — SPO2: within normal limits / at patient's baseline"
+    );
+  });
+
+  test("Abnormal SPO2 with note includes note", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      spo2: "Hypoxic",
+      spo2Note: "SpO2 88% on room air",
+    });
+    expect(prompt).toContain(
+      "EMS Assessment — SPO2: Hypoxic — SpO2 88% on room air"
+    );
+  });
+});
+
+// ─── Patient demographics ─────────────────────────────────────────────────────
+
+describe("Patient demographics", () => {
+  test("DOB appended to patient line when provided", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      patientDOB: "1950-03-15",
+    });
+    expect(prompt).toContain("Patient: 75-year-old male (DOB: 1950-03-15)");
+  });
+
+  test("DOB omitted from patient line when empty", () => {
+    const prompt = buildStructuredPrompt({ ...base, patientDOB: "" });
+    expect(prompt).not.toContain("DOB:");
+  });
+
+  test("Patient address included when provided", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      patientAddress: "123 Main St, Boston MA",
+    });
+    expect(prompt).toContain("Patient Address: 123 Main St, Boston MA");
+  });
+
+  test("Patient address omitted when empty", () => {
+    const prompt = buildStructuredPrompt({ ...base, patientAddress: "" });
+    expect(prompt).not.toContain("Patient Address:");
+  });
+});
+
+// ─── Emergent-only fields ─────────────────────────────────────────────────────
+
+describe("Emergent-only fields", () => {
+  test("Pain score included when provided", () => {
+    const prompt = buildStructuredPrompt({ ...base, painScore: "7" });
+    expect(prompt).toContain("Pain Score: 7/10");
+  });
+
+  test("Pain score omitted when empty", () => {
+    const prompt = buildStructuredPrompt({ ...base, painScore: "" });
+    expect(prompt).not.toContain("Pain Score:");
+  });
+
+  test("Height included when provided", () => {
+    const prompt = buildStructuredPrompt({
+      ...base,
+      patientHeight: "5ft 10in (70 in)",
+    });
+    expect(prompt).toContain("Height: 5ft 10in (70 in)");
+  });
+
+  test("Height omitted when empty", () => {
+    const prompt = buildStructuredPrompt({ ...base, patientHeight: "" });
+    expect(prompt).not.toContain("Height:");
+  });
+
+  test("Weight included when provided", () => {
+    const prompt = buildStructuredPrompt({ ...base, patientWeight: "180" });
+    expect(prompt).toContain("Weight: 180");
+  });
+
+  test("Weight omitted when empty", () => {
+    const prompt = buildStructuredPrompt({ ...base, patientWeight: "" });
+    expect(prompt).not.toContain("Weight:");
+  });
+});
+
 // ─── Optional fields ──────────────────────────────────────────────────────────
 
 describe("Optional fields", () => {

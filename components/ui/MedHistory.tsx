@@ -2,9 +2,9 @@
 
 import { useState, useRef } from "react";
 import { DIAGNOSES } from "@/lib/diagnoses";
-import { inputCls } from "@/components/forms/FormLayout";
+import { inputCls } from "@/components/ui/FormPrimitives";
 
-export default function MedHistoryInput({
+export default function MedHistory({
   value,
   onChange,
 }: {

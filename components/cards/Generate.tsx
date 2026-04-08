@@ -5,7 +5,7 @@ export const BLANK_FORM_MESSAGE =
   "Did you think I was a magician who could pull a PCR narrative out of nothing?\n" +
   "Next time try actually doing your job and filling out the fields before hitting submit.";
 
-import { Status } from "@/hooks/useNarrativeGeneration";
+import { Status } from "@/hooks/use-narrative-generation";
 import NarrativeOutput from "@/components/narrative/NarrativeOutput";
 import { cn } from "@/lib/cn";
 

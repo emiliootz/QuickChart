@@ -2,7 +2,7 @@
 
 import { Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Status } from "@/hooks/useNarrativeGeneration";
+import { Status } from "@/hooks/use-narrative-generation";
 
 export function useFormWatchers(control: Control<StructuredFormData>, status: Status) {
   const sceneLocation = useWatch({ control, name: "sceneLocation" });

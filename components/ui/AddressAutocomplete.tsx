@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { inputCls } from "@/components/forms/FormLayout";
+import { inputCls } from "@/components/ui/FormPrimitives";
 
 export default function AddressAutocomplete({
   value,

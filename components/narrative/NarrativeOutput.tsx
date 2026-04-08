@@ -1,6 +1,6 @@
 "use client";
 
-import { useClipboard } from "@/hooks/useClipboard";
+import { useClipboard } from "@/hooks/use-clipboard";
 import { cn } from "@/lib/cn";
 
 type Status = "hurry up" | "working..." | "relax im doing it" | "ok im done" | "sucks for you";

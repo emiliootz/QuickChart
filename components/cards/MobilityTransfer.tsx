@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
-import { Card, Field, inputCls } from "@/components/forms/FormLayout";
+import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 import { cn } from "@/lib/cn";
 
 interface Props {
