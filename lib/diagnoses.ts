@@ -77,4 +77,8 @@ export const DIAGNOSES: Diagnosis[] = [
   { full: "Valvular heart disease", abbr: "Valvular heart dz" },
   { full: "Ventricular tachycardia", abbr: "VT" },
   { full: "Blindness", abbr: "Blindness" },
+  { full: "Multiple Sclerosis", abbr: "MS" },
+  { full: "Persistent Postural-Perceptual Dizziness", abbr: "PPPD" },
+  { full: "Orthostatic Hypotension", abbr: "OH" },
+  { full: "Benign Prostatic Hyperplasia", abbr: "BPH" },
 ];
