@@ -1,3 +1,21 @@
+// structured.ts — builds the user-role prompt from structured form data.
+//
+// buildStructuredPrompt() converts a StructuredFormData object into a plain-text
+// key-value block that the AI reads as the "call data" for a specific transport.
+//
+// Resolution helpers (run before building the prompt lines):
+//   resolveHospital  — converts internal hospital IDs (e.g. "__bidmc__", "__mclean__")
+//                      and campus values into a human-readable hospital name + location.
+//                      BILH and MGB have special sub-hospital handling; all others use
+//                      the name directly or fall back to the custom free-text field.
+//   resolveVital     — formats a vital sign: "Normal (at Baseline)" → plain English,
+//                      abnormal values include the note field (e.g. "Hypertensive — 180/110 mmHg").
+//   resolvedTransportReason — expands structured transport reason values into prose
+//                             (e.g. oxygen delivery method + liters, cast type, section number).
+//
+// Optional fields (pain, height, weight, complaints, additionalInfo) are only
+// appended to the prompt if they have a non-empty value.
+
 import { StructuredFormData } from "@/lib/types";
 
 export function buildStructuredPrompt(data: StructuredFormData): string {

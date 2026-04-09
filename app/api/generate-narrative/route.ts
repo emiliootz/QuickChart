@@ -1,3 +1,19 @@
+// POST /api/generate-narrative
+//
+// Accepts a GenerateRequest body ({ model, structuredData }) and streams the
+// AI-generated PCR narrative back as plain text.
+//
+// Flow:
+//   1. Validates that ANTHROPIC_API_KEY is set and the request body is well-formed.
+//   2. Calls the Anthropic streaming API with the system prompt (formats.ts) and
+//      the structured user prompt built from the form data (structured.ts).
+//   3. Wraps the SDK's async stream in a Web ReadableStream, encoding each text
+//      delta chunk and forwarding it to the client as it arrives.
+//   4. Returns 429 if the Anthropic API rate limit is hit; 500 for all other errors.
+//
+// runtime = "nodejs" is required because the Anthropic SDK uses Node.js streams
+// internally — the Edge runtime is not compatible.
+
 export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";

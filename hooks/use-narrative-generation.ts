@@ -1,5 +1,22 @@
 "use client";
 
+// useNarrativeGeneration — manages the full AI generation lifecycle.
+//
+// Status values (intentionally descriptive):
+//   "hurry up"          — idle, nothing has been generated yet
+//   "working..."        — POST request sent, waiting for the server to respond
+//   "relax im doing it" — response received, streaming text chunks into `narrative`
+//   "ok im done"        — stream complete, narrative is ready
+//   "sucks for you"     — an error occurred, message is in `error`
+//
+// generate() POSTs to /api/generate-narrative and reads the response as a
+// streaming plain-text body, appending each decoded chunk to `narrative`.
+//
+// fail() lets useSubmit report validation errors (e.g. blank form) without
+// going through the API at all.
+//
+// reset() clears all state back to idle — used by "Regenerate" and "New Call".
+
 import { useState } from "react";
 import { GenerateRequest } from "@/lib/types";
 

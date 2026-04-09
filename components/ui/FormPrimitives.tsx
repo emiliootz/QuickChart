@@ -1,3 +1,12 @@
+// FormPrimitives — shared UI building blocks used by every card in the form.
+//
+//   inputCls   — Tailwind class string applied to all inputs and selects for
+//                consistent styling across the form.
+//   Card       — white rounded panel with a small uppercase section label at the top.
+//                Each section of the PCR form is wrapped in one of these.
+//   Field      — label + input wrapper that stacks them vertically with a small gap.
+//                Every labeled input in the form uses this.
+
 import { cn } from "@/lib/cn";
 
 export const inputCls =

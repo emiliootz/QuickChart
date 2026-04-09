@@ -1,5 +1,20 @@
 "use client";
 
+// MedHistory — tag-style autocomplete input for selecting medical history diagnoses.
+//
+// How it works:
+//   - The user types a diagnosis name or abbreviation; the dropdown filters DIAGNOSES
+//     (from lib/diagnoses.ts) and shows up to 8 matches.
+//   - Selecting a match (click or Enter) adds it as a tag and clears the input.
+//   - If the typed text doesn't exactly match any diagnosis, an "Add [text]" option
+//     appears at the bottom so the user can enter a custom diagnosis.
+//   - Pressing Backspace on an empty input removes the last tag.
+//   - The selected tags are joined into a comma-separated string and passed up via
+//     onChange, which writes the value back to the React Hook Form state.
+//
+// The dropdown closes on blur with a 150ms delay — long enough for onMouseDown on
+// a list item to fire before the blur handler hides the list.
+
 import { useState, useRef } from "react";
 import { DIAGNOSES } from "@/lib/diagnoses";
 import { inputCls } from "@/components/ui/FormPrimitives";
