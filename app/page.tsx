@@ -1,3 +1,7 @@
+// Home — the single page of the app.
+// Renders a page header and the PCRForm component.
+// All application logic lives in PCRForm and its hooks.
+
 import PCRForm from "@/components/forms/PCRForm";
 
 export default function Home() {

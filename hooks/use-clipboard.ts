@@ -1,5 +1,11 @@
 "use client";
 
+// useClipboard — copies text to the clipboard and briefly shows a "Copied!" confirmation.
+//
+// Uses the modern navigator.clipboard API with a fallback for older browsers that
+// don't support it (creates a hidden textarea, selects it, and runs execCommand("copy")).
+// The `copied` flag resets to false after 2 seconds.
+
 import { useState } from "react";
 
 export function useClipboard() {

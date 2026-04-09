@@ -1,5 +1,18 @@
 "use client";
 
+// useSubmit — form submission and return trip logic.
+//
+// onSubmit (wired to React Hook Form's handleSubmit):
+//   1. Checks if the form is effectively blank (key fields all empty) and calls
+//      fail() with BLANK_FORM_MESSAGE if so — skips the API entirely.
+//   2. Otherwise calls generate() with the form data and the fixed model.
+//   3. Scrolls the narrative output into view after submission.
+//
+// onReturnTrip:
+//   Builds a mirror of the current form data with scene and destination swapped
+//   (all scene fields get destination values and vice versa), then calls generate()
+//   with the swapped data. Used for the second leg of a round-trip transport.
+
 import { StructuredFormData } from "@/lib/types";
 import { BLANK_FORM_MESSAGE } from "@/components/cards/Generate";
 

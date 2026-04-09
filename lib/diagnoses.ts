@@ -1,3 +1,10 @@
+// diagnoses.ts — master list of medical diagnoses for the MedHistory autocomplete.
+//
+// Each entry has a `full` name (displayed in the dropdown and used as the tag label)
+// and an `abbr` abbreviation (shown as a hint and also searchable).
+// The MedHistory component filters this list against the user's typed input,
+// matching on either the full name or abbreviation.
+
 export type Diagnosis = { full: string; abbr: string };
 
 export const DIAGNOSES: Diagnosis[] = [

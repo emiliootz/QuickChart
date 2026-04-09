@@ -1,3 +1,15 @@
+// formats.ts — system prompt for the AI narrative generation.
+//
+// getSystemPrompt() returns the fixed instruction set sent as the "system" role
+// in every Anthropic API call. It defines:
+//   - Writing style rules (third person, past tense, no markdown, no speculation)
+//   - The exact 9-paragraph structure every narrative must follow
+//   - Critical prohibitions — phrases that imply routine/non-medical transport,
+//     which can cause Medicare claim denials
+//
+// This is kept separate from the user prompt (structured.ts) so the instructions
+// and the call data are cleanly separated in the API message.
+
 export function getSystemPrompt(): string {
   return `You are an EMS documentation assistant helping write ambulance Patient Care Report (PCR) narratives for interfacility transports.
 

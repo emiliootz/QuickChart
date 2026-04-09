@@ -1,3 +1,9 @@
+// defaults.ts — default (empty) values for every field in StructuredFormData.
+//
+// Passed to React Hook Form's `defaultValues` in PCRForm so the form initializes
+// in a clean state, and also used by the "New Call — Clear All Fields" reset.
+// Every field is an empty string so TypeScript is satisfied without null checks.
+
 import { StructuredFormData } from "@/lib/types";
 
 export const DEFAULT_FORM_VALUES: StructuredFormData = {

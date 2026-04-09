@@ -1,5 +1,16 @@
 "use client";
 
+// useFormWatchers — subscribes to the specific form fields that drive conditional
+// rendering across multiple cards, and derives two boolean flags from them.
+//
+// All watchers use useWatch (not watch()) for React Compiler compatibility —
+// useWatch can be memoized; watch() cannot.
+//
+// Derived flags:
+//   isEmergent   — true when transportType is any Emergent Priority level;
+//                  unlocks DOB/address in Patient and pain/height/weight in EMSAssessment
+//   isGenerating — true while the AI stream is in progress; disables the submit button
+
 import { Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Status } from "@/hooks/use-narrative-generation";

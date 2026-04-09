@@ -1,5 +1,18 @@
 "use client";
 
+// NarrativeOutput — displays the AI-generated narrative and responds to Status changes.
+//
+// Status → UI mapping:
+//   "hurry up"          → renders nothing (form hasn't been submitted yet)
+//   "working..."        → animated skeleton placeholder (waiting for stream to start)
+//   "relax im doing it" → narrative text streaming in with a blinking cursor
+//   "ok im done"        → full narrative with Copy and Regenerate buttons
+//   "sucks for you"     → red error banner with the error message
+//
+// Copy button uses useClipboard (with a 2-second "Copied!" confirmation flash).
+// Regenerate calls onRegenerate (which calls reset() in useNarrativeGeneration)
+// so the user can re-submit without clearing the form.
+
 import { useClipboard } from "@/hooks/use-clipboard";
 import { cn } from "@/lib/cn";
 
