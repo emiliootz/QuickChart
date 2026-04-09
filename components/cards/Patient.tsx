@@ -27,6 +27,7 @@ import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 import { cn } from "@/lib/cn";
 import AddressAutocomplete from "@/components/ui/AddressAutocomplete";
 import MedHistory from "@/components/ui/MedHistory";
+import ChiefComplaint from "@/components/ui/ChiefComplaint";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
@@ -46,6 +47,7 @@ export default function Patient({
   const patientAge = useWatch({ control, name: "patientAge" });
   const patientDOB = useWatch({ control, name: "patientDOB" });
   const patientAddress = useWatch({ control, name: "patientAddress" });
+  const chiefComplaint = useWatch({ control, name: "chiefComplaint" });
   const medicalHistory = useWatch({ control, name: "medicalHistory" });
 
   useEffect(() => {
@@ -106,11 +108,9 @@ export default function Patient({
       )}
 
       <Field label="Chief Complaint">
-        <input
-          {...register("chiefComplaint")}
-          type="text"
-          placeholder="e.g. failure to thrive, frequent falls"
-          className={inputCls}
+        <ChiefComplaint
+          value={chiefComplaint}
+          onChange={v => setValue("chiefComplaint", v)}
         />
       </Field>
 
