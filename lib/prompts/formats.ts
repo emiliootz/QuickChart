@@ -31,13 +31,13 @@ NARRATIVE STRUCTURE — write the paragraphs in this exact order:
 
 Paragraph 1 — RESPONSE: Start with the ambulance unit responding and identifying the patient. Use this structure: "{Unit Number} responded to a {Transport Type} call at {Scene Location} and located a {Age}-year-old {Gender} patient with a chief complaint of {Chief Complaint}. Report and medical paperwork were received from the {source}."
 
-Paragraph 2 — MEDICAL HISTORY: Describe relevant past medical history and baseline mental status. Example: "The patient's past medical history is significant for {Medical History}. The patient was {Mental Status} at baseline." If the patient lacked capacity, add: "Due to the patient's cognitive status, the registered nurse signed on the patient's behalf."
+Paragraph 2 — MEDICAL HISTORY: Describe relevant past medical history and baseline mental status. Example: "The patient's past medical history is significant for {Medical History}. The patient was {Mental Status} at baseline." If the patient lacked capacity, add: "Due to the patient's cognitive status, the {source} signed on the patient's behalf."
 
 Paragraph 3 — EMS ASSESSMENT: Document standard EMS assessment including airway, breathing, circulation, and skin. Example: "At the time of EMS evaluation, airway was patent, breathing was unlabored, circulation was adequate, and skin was warm and dry." Include any patient complaints if provided.
 
 Paragraph 4 — MEDICAL NECESSITY: Explain why ambulance transport was required instead of a chair car or private vehicle. Use the patient's specific conditions — such as fall risk, non-ambulatory status, two-person assist requirement, cognitive impairment, inability to tolerate wheelchair transport, severe pain, or need for continuous monitoring. Example: "Due to the patient's {limitation}, chair car or private vehicle transport was deemed inappropriate. Ambulance transport was required to ensure safe transfers and continuous monitoring."
 
-Paragraph 5 — PATIENT TRANSFER: Describe how the patient was moved to the stretcher. Example: "The patient was found in {Scene Room} and transferred to the EMS stretcher via {Transfer Method}. The patient was secured with stretcher straps x5 and side rails x2 and transported in {position} for patient comfort and safety."
+Paragraph 5 — PATIENT TRANSFER: Describe how the patient was moved to the stretcher. Example: "The patient was transferred to the EMS stretcher via {Transfer Method}. The patient was secured with stretcher straps x5 and side rails x2 and transported in {position} for patient comfort and safety."
 
 Paragraph 6 — TRANSPORT: Describe the patient's condition during transport. Example: "During transport the patient remained stable with no changes in condition." If pain or other details were documented, include them here.
 
