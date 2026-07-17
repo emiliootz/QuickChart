@@ -2,39 +2,38 @@
 
 // Scene — captures where the crew picked up the patient.
 //
-// The location + hospital cascade is handled by LocationPicker (components/ui/LocationPicker.tsx).
+// The location + hospital picker is handled by LocationPicker (components/ui/LocationPicker.tsx).
 // This card adds the fields unique to the scene: floor/room and who gave the handoff report.
 //
-// sceneLocation, sceneHospitalSystem, and sceneHospitalName are watched in
-// use-form-watchers.ts and passed down as props so LocationPicker can drive its
-// conditional rendering without any internal useWatch calls.
+// sceneLocation and sceneHospitalName are watched in use-form-watchers.ts and
+// passed down as props so LocationPicker can drive its conditional rendering
+// without any internal useWatch calls.
 
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 import LocationPicker from "@/components/ui/LocationPicker";
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
-  // Watched values passed from PCRForm via use-form-watchers.ts
-  sceneLocation: string;          // drives which sub-fields appear in LocationPicker
-  sceneHospitalSystem: string;    // drives which hospitals appear
-  sceneHospitalName: string;      // drives whether a campus sub-dropdown appears
+  setValue: UseFormSetValue<StructuredFormData>;
+  sceneLocation: string;       // drives which sub-fields appear in LocationPicker
+  sceneHospitalName: string;   // current selected hospital value
 }
 
 export default function Scene({
   register,
+  setValue,
   sceneLocation,
-  sceneHospitalSystem,
   sceneHospitalName,
 }: Props) {
   return (
     <Card title="Scene">
       <LocationPicker
         register={register}
+        setValue={setValue}
         variant="scene"
         location={sceneLocation}
-        hospitalSystem={sceneHospitalSystem}
         hospitalName={sceneHospitalName}
       />
 

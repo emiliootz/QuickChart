@@ -8,6 +8,7 @@
 export type Diagnosis = { full: string; abbr: string };
 
 export const DIAGNOSES: Diagnosis[] = [
+  { full: "None Reported", abbr: "none" },
   { full: "Attention-Deficit/Hyperactivity Disorder", abbr: "ADHD" },
   { full: "Alzheimer's disease", abbr: "Alzheimer's dz" },
   { full: "Anemia", abbr: "Anemia" },

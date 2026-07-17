@@ -40,6 +40,49 @@ export const HOSPITAL_SYSTEMS: Record<string, HospitalOption[]> = {
   "Universal Health Services (Arbour Health)": UHS_HOSPITALS,
 };
 
+// Flat list of every hospital with fully-resolved names — used by HospitalPicker autocomplete.
+// Special IDs (__bidmc__, __mclean__, __spaulding__) are expanded to their individual locations.
+export const ALL_HOSPITALS: HospitalOption[] = [
+  ...BILH_HOSPITALS.flatMap((h) => {
+    if (h.value === "__bidmc__") {
+      return [
+        { label: "Beth Israel — Boston (East Campus)", value: "Beth Israel Deaconess Medical Center East Campus in Boston, MA", abbr: "BIDMC East, BI East, BI Boston" },
+        { label: "Beth Israel — Boston (West Campus)", value: "Beth Israel Deaconess Medical Center West Campus in Boston, MA", abbr: "BIDMC West, BI West, BI Boston" },
+      ];
+    }
+    return [h];
+  }),
+  ...MGB_HOSPITALS.flatMap((h) => {
+    if (h.value === "__mclean__") {
+      return [
+        { label: "McLean Hospital — Belmont Campus", value: "McLean Hospital Belmont Campus in Belmont, MA", abbr: "McLean Belmont" },
+        { label: "McLean Hospital — SouthEast (Middleborough)", value: "McLean SouthEast in Middleborough, MA", abbr: "McLean SouthEast, McLean Middleborough" },
+        { label: "McLean Hospital — SouthEast at Oak Street (Middleborough)", value: "McLean SouthEast at Oak Street in Middleborough, MA", abbr: "McLean Oak Street, McLean SouthEast" },
+        { label: "McLean Hospital — Arlington Campus", value: "McLean Hospital Arlington Campus in Arlington, MA", abbr: "McLean Arlington" },
+      ];
+    }
+    if (h.value === "__spaulding__") {
+      return [
+        { label: "Spaulding Rehab Hospital — Charlestown", value: "Spaulding Rehabilitation Hospital in Charlestown, MA", abbr: "Spaulding Charlestown, SRH" },
+        { label: "Spaulding Nursing & Therapy Center — Brighton", value: "Spaulding Nursing and Therapy Center-Brighton in Brighton, MA", abbr: "Spaulding Brighton, Spaulding Nursing Brighton" },
+        { label: "Spaulding Hospital for Continued Medical Care — Cambridge", value: "Spaulding Hospital for Continued Medical Care Cambridge in Cambridge, MA", abbr: "Spaulding Cambridge, Spaulding Continued Care" },
+        { label: "Spaulding Rehab Hospital — Cape Cod", value: "Spaulding Rehabilitation Hospital-Cape Cod in East Sandwich, MA", abbr: "Spaulding Cape Cod" },
+        { label: "Spaulding Rehab Center for Children — Lexington", value: "Spaulding Rehabilitation Center for Children in Lexington, MA", abbr: "Spaulding Children, Spaulding Lexington" },
+      ];
+    }
+    return [h];
+  }),
+  ...BCH_HOSPITALS,
+  ...BMC_HOSPITALS,
+  ...CHA_HOSPITALS,
+  ...CAREONE_HOSPITALS,
+  ...DFCI_HOSPITALS,
+  ...ENCOMPASS_HOSPITALS,
+  ...DPH_HOSPITALS,
+  ...TUFTS_HOSPITALS,
+  ...UHS_HOSPITALS,
+];
+
 export function getCampusOptions(system: string, name: string): HospitalOption[] {
   if (system === "Beth Israel Lahey Health" && name === "__bidmc__") {
     return [

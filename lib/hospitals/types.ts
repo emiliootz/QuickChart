@@ -1,1 +1,1 @@
-export type HospitalOption = { value: string; label: string };
+export type HospitalOption = { value: string; label: string; abbr?: string };
