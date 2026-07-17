@@ -1,20 +1,23 @@
 "use client";
 
-// LocationPicker — reusable location + hospital cascade used by both Scene and Destination.
+// LocationPicker — reusable location + hospital picker used by both Scene and Destination.
 //
 // Renders a "location type" dropdown and conditionally shows:
-//   Hospital  → Network → Hospital → Campus (or free-text if system is "__other__")
+//   Hospital          → HospitalPicker autocomplete (searches all networks at once)
 //   Veterinary Hospital → vet-specific hospital list
-//   Other     → free-text field
+//   Other             → free-text field
 //
 // Field names differ between scene and destination, so the component uses a
 // `variant` prop to look up the correct StructuredFormData keys from FIELDS.
+// setValue is required so HospitalPicker can write the resolved hospital name
+// directly into the hospitalName field.
 
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Path } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Field, inputCls } from "@/components/ui/FormPrimitives";
-import { HOSPITAL_SYSTEMS, VET_HOSPITALS, getCampusOptions } from "@/lib/hospitals";
+import { VET_HOSPITALS } from "@/lib/hospitals";
+import HospitalPicker from "@/components/ui/HospitalPicker";
 
 // ─── Field name map ────────────────────────────────────────────────────────────
 
@@ -22,8 +25,8 @@ const FIELDS = {
   scene: {
     location:             "sceneLocation"        as Path<StructuredFormData>,
     locationCustom:       "sceneLocationCustom"  as Path<StructuredFormData>,
-    hospitalSystem:       "sceneHospitalSystem"  as Path<StructuredFormData>,
     hospitalName:         "sceneHospitalName"    as Path<StructuredFormData>,
+    hospitalSystem:       "sceneHospitalSystem"  as Path<StructuredFormData>,
     hospitalCampus:       "sceneHospitalCampus"  as Path<StructuredFormData>,
     hospitalCustom:       "sceneHospitalCustom"  as Path<StructuredFormData>,
     locationLabel:        "Scene Location",
@@ -32,8 +35,8 @@ const FIELDS = {
   destination: {
     location:             "destination"               as Path<StructuredFormData>,
     locationCustom:       "destinationCustom"          as Path<StructuredFormData>,
-    hospitalSystem:       "destinationHospitalSystem"  as Path<StructuredFormData>,
     hospitalName:         "destinationHospitalName"    as Path<StructuredFormData>,
+    hospitalSystem:       "destinationHospitalSystem"  as Path<StructuredFormData>,
     hospitalCampus:       "destinationHospitalCampus"  as Path<StructuredFormData>,
     hospitalCustom:       "destinationHospitalCustom"  as Path<StructuredFormData>,
     locationLabel:        "Destination",
@@ -45,23 +48,30 @@ const FIELDS = {
 
 interface Props {
   register: UseFormRegister<StructuredFormData>;
+  setValue: UseFormSetValue<StructuredFormData>;
   variant: "scene" | "destination";
   // Watched values — passed from the parent card (via use-form-watchers)
-  location: string;        // drives which sub-fields appear
-  hospitalSystem: string;  // drives which hospitals appear
-  hospitalName: string;    // drives whether a campus sub-dropdown appears
+  location: string;       // drives which sub-fields appear
+  hospitalName: string;   // current selected hospital (drives HospitalPicker value)
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
 export default function LocationPicker({
   register,
+  setValue,
   variant,
   location,
-  hospitalSystem,
   hospitalName,
 }: Props) {
   const f = FIELDS[variant];
+
+  function handleHospitalChange(resolved: string) {
+    setValue(f.hospitalName, resolved);
+    setValue(f.hospitalSystem, "");
+    setValue(f.hospitalCampus, "");
+    setValue(f.hospitalCustom, "");
+  }
 
   return (
     <>
@@ -75,6 +85,13 @@ export default function LocationPicker({
           <option value="__other__">Other (enter manually)</option>
         </select>
       </Field>
+
+      {/* Hospital search — replaces the old Network → Hospital → Campus cascade */}
+      {location === "Hospital" && (
+        <Field label="Hospital">
+          <HospitalPicker value={hospitalName} onChange={handleHospitalChange} />
+        </Field>
+      )}
 
       {/* Vet hospital list */}
       {location === "Veterinary Hospital" && (
@@ -95,63 +112,6 @@ export default function LocationPicker({
             {...register(f.locationCustom)}
             type="text"
             placeholder={f.locationCustomPlaceholder}
-            className={inputCls}
-          />
-        </Field>
-      )}
-
-      {/* Hospital network */}
-      {location === "Hospital" && (
-        <Field label="Hospital Network">
-          <select {...register(f.hospitalSystem)} className={inputCls}>
-            <option value="">Select network...</option>
-            <option value="Beth Israel Lahey Health">Beth Israel Lahey Health</option>
-            <option value="Boston Children's">Boston Children&apos;s</option>
-            <option value="Boston Medical Center Health System">Boston Medical Center Health System</option>
-            <option value="Cambridge Health Alliance">Cambridge Health Alliance</option>
-            <option value="CareOne">CareOne</option>
-            <option value="Dana-Farber Cancer Institute">Dana-Farber Cancer Institute</option>
-            <option value="Encompass Health">Encompass Health</option>
-            <option value="Mass General Brigham">Mass General Brigham</option>
-            <option value="Massachusetts Department of Public Health (DPH)">Massachusetts Department of Public Health (DPH)</option>
-            <option value="Tufts Medicine">Tufts Medicine</option>
-            <option value="Universal Health Services (Arbour Health)">Universal Health Services (Arbour Health)</option>
-            <option value="__other__">Other — enter manually</option>
-          </select>
-        </Field>
-      )}
-
-      {/* Hospital list for known systems */}
-      {location === "Hospital" && HOSPITAL_SYSTEMS[hospitalSystem] && (
-        <Field label="Hospital">
-          <select {...register(f.hospitalName)} className={inputCls}>
-            <option value="">Select hospital...</option>
-            {HOSPITAL_SYSTEMS[hospitalSystem].map((h) => (
-              <option key={h.value} value={h.value}>{h.label}</option>
-            ))}
-          </select>
-        </Field>
-      )}
-
-      {/* Campus sub-dropdown when the selected hospital has multiple campuses */}
-      {location === "Hospital" && getCampusOptions(hospitalSystem, hospitalName).length > 0 && (
-        <Field label="Campus / Location">
-          <select {...register(f.hospitalCampus)} className={inputCls}>
-            <option value="">Select...</option>
-            {getCampusOptions(hospitalSystem, hospitalName).map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
-            ))}
-          </select>
-        </Field>
-      )}
-
-      {/* Free-text for unlisted hospital systems */}
-      {location === "Hospital" && hospitalSystem === "__other__" && (
-        <Field label="Hospital Name (specify)">
-          <input
-            {...register(f.hospitalCustom)}
-            type="text"
-            placeholder="Enter hospital name and location"
             className={inputCls}
           />
         </Field>

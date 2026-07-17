@@ -2,16 +2,10 @@
 
 // Patient — demographic and clinical context fields.
 //
-// DOB → Age auto-calculation:
-//   When the user picks a date of birth, a useEffect calculates the patient's
-//   current age in years and writes it to `patientAge` via setValue. This keeps
-//   both fields in sync without manual entry.
-//
 // isEmergent gate:
-//   When transportType is any Emergent Priority, additional fields unlock:
-//     - Date of Birth (instead of plain Age input) + the calculated age display
+//   When transportType is any Emergent Priority, an additional field unlocks:
 //     - Patient Address (with Google Places autocomplete)
-//   These are not collected for non-emergent / routine transports.
+//   Age is always collected as a plain number regardless of transport type.
 //
 // transportReason cascade:
 //   Certain reasons reveal a follow-up field:
@@ -20,11 +14,9 @@
 //     "Is sectioned"  → Section (12 or 21)
 //     "Other"         → free-text reason field
 
-import { useEffect } from "react";
 import { UseFormRegister, UseFormSetValue, Control, useWatch } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
-import { cn } from "@/lib/cn";
 import AddressAutocomplete from "@/components/ui/AddressAutocomplete";
 import MedHistory from "@/components/ui/MedHistory";
 import ChiefComplaint from "@/components/ui/ChiefComplaint";
@@ -44,50 +36,26 @@ export default function Patient({
   isEmergent,
   transportReason,
 }: Props) {
-  const patientAge = useWatch({ control, name: "patientAge" });
-  const patientDOB = useWatch({ control, name: "patientDOB" });
   const patientAddress = useWatch({ control, name: "patientAddress" });
   const chiefComplaint = useWatch({ control, name: "chiefComplaint" });
   const medicalHistory = useWatch({ control, name: "medicalHistory" });
 
-  useEffect(() => {
-    if (!patientDOB) return;
-    const birth = new Date(patientDOB);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-    if (age >= 0) setValue("patientAge", String(age));
-  }, [patientDOB, setValue]);
   return (
     <Card title="Patient">
       <div className="grid grid-cols-2 gap-4">
-        {isEmergent ? (
-          <Field label="Date of Birth">
-            <input
-              {...register("patientDOB")}
-              type="date"
-              className={cn(inputCls)}
-            />
-            {patientAge && (
-              <p className="text-xs text-slate-500 mt-1">Age: {patientAge} years old</p>
-            )}
-          </Field>
-        ) : (
-          <Field label="Age">
-            <input
-              {...register("patientAge")}
-              type="number"
-              placeholder="e.g. 75"
-              className={inputCls}
-              maxLength={3}
-              onKeyDown={e => {
-                if (!/^\d$/.test(e.key) && !["Backspace","Delete","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Tab"].includes(e.key)) e.preventDefault();
-                if (/^\d$/.test(e.key) && (e.target as HTMLInputElement).value.length >= 3) e.preventDefault();
-              }}
-            />
-          </Field>
-        )}
+        <Field label="Age">
+          <input
+            {...register("patientAge")}
+            type="number"
+            placeholder="e.g. 75"
+            className={inputCls}
+            maxLength={3}
+            onKeyDown={e => {
+              if (!/^\d$/.test(e.key) && !["Backspace","Delete","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Tab"].includes(e.key)) e.preventDefault();
+              if (/^\d$/.test(e.key) && (e.target as HTMLInputElement).value.length >= 3) e.preventDefault();
+            }}
+          />
+        </Field>
         <Field label="Gender">
           <select {...register("patientGender")} className={inputCls}>
             <option value="">Select...</option>
@@ -132,6 +100,7 @@ export default function Patient({
           <option value="Has severe dementia">Has severe dementia</option>
           <option value="Is altered mental status">Is altered mental status</option>
           <option value="Is paralyzed">Is paralyzed</option>
+          <option value="Is being transfered for higher level of care">Transfer for higher level of care</option>
           <option value="Other">Other</option>
         </select>
       </Field>

@@ -17,10 +17,8 @@ import { Status } from "@/hooks/use-narrative-generation";
 
 export function useFormWatchers(control: Control<StructuredFormData>, status: Status) {
   const sceneLocation = useWatch({ control, name: "sceneLocation" });
-  const sceneHospitalSystem = useWatch({ control, name: "sceneHospitalSystem" });
   const sceneHospitalName = useWatch({ control, name: "sceneHospitalName" });
   const destination = useWatch({ control, name: "destination" });
-  const destinationHospitalSystem = useWatch({ control, name: "destinationHospitalSystem" });
   const destinationHospitalName = useWatch({ control, name: "destinationHospitalName" });
   const transportPosition = useWatch({ control, name: "transportPosition" });
   const transportReason = useWatch({ control, name: "transportReason" });
@@ -35,10 +33,8 @@ export function useFormWatchers(control: Control<StructuredFormData>, status: St
 
   return {
     sceneLocation,
-    sceneHospitalSystem,
     sceneHospitalName,
     destination,
-    destinationHospitalSystem,
     destinationHospitalName,
     transportPosition,
     transportReason,

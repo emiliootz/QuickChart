@@ -26,8 +26,8 @@ export default function PCRForm() {
   });
 
   const {
-    sceneLocation, sceneHospitalSystem, sceneHospitalName,
-    destination, destinationHospitalSystem, destinationHospitalName,
+    sceneLocation, sceneHospitalName,
+    destination, destinationHospitalName,
     transportPosition, transportReason,
     bloodPressure, heartRate, spo2,
     mobilityLevel, isEmergent, isGenerating,
@@ -35,12 +35,12 @@ export default function PCRForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <UnitTransport register={register} />
+      <UnitTransport register={register} setValue={setValue} />
 
       <Scene
         register={register}
+        setValue={setValue}
         sceneLocation={sceneLocation}
-        sceneHospitalSystem={sceneHospitalSystem}
         sceneHospitalName={sceneHospitalName}
       />
 
@@ -71,8 +71,8 @@ export default function PCRForm() {
 
       <Destination
         register={register}
+        setValue={setValue}
         destination={destination}
-        destinationHospitalSystem={destinationHospitalSystem}
         destinationHospitalName={destinationHospitalName}
       />
 

@@ -4,26 +4,48 @@
 // Captures the ambulance unit identifier and the transport priority level.
 //
 // transportType drives `isEmergent` in use-form-watchers.ts, which unlocks
-// additional fields in Patient (DOB, address) and EMSAssessment (pain, height, weight).
+// additional fields in Patient (address) and EMSAssessment (pain, height, weight).
+//
+// Ambulance Number: user types 1–250; stored as "Brewster Ambulance-XX"
+// (single digits zero-padded: 1 → "Brewster Ambulance-01").
 
-import { UseFormRegister } from "react-hook-form";
+import { useState } from "react";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { StructuredFormData } from "@/lib/types";
 import { Card, Field, inputCls } from "@/components/ui/FormPrimitives";
 
 interface Props {
-  // register — React Hook Form method that wires each input to the form state
   register: UseFormRegister<StructuredFormData>;
+  setValue: UseFormSetValue<StructuredFormData>;
 }
 
-export default function UnitTransport({ register }: Props) {
+export default function UnitTransport({ register, setValue }: Props) {
+  const [unitNum, setUnitNum] = useState("");
+
+  function handleUnitChange(raw: string) {
+    const digits = raw.replace(/\D/g, "").slice(0, 3);
+    setUnitNum(digits);
+    const n = parseInt(digits, 10);
+    if (digits && n >= 1 && n <= 250) {
+      setValue("ambulanceNumber", `Brewster Ambulance-${String(n).padStart(2, "0")}`);
+    } else {
+      setValue("ambulanceNumber", "");
+    }
+  }
+
   return (
     <Card title="Unit & Transport">
       <div className="grid grid-cols-2 gap-4">
         <Field label="Ambulance Number">
           <input
-            {...register("ambulanceNumber")}
             type="text"
-            placeholder="e.g. BA-042"
+            inputMode="numeric"
+            value={unitNum}
+            onChange={e => handleUnitChange(e.target.value)}
+            onKeyDown={e => {
+              if (!/^\d$/.test(e.key) && !["Backspace","Delete","ArrowLeft","ArrowRight","Tab"].includes(e.key)) e.preventDefault();
+            }}
+            placeholder="e.g. 42"
             className={inputCls}
           />
         </Field>
